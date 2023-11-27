@@ -1,0 +1,9 @@
+apiVersion: khaos.stackzoo.io/v1alpha1
+kind: PodDestroyer
+metadata:
+  name: nginx-destroyer
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  maxPods: 20
