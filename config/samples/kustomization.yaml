@@ -2,4 +2,5 @@
 resources:
 - khaos_v1alpha1_poddestroyer.yaml
 - khaos_v1alpha1_nodedestroyer.yaml
+- khaos_v1alpha1_secretdestroyer.yaml
 #+kubebuilder:scaffold:manifestskustomizesamples

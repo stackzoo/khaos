@@ -23,6 +23,15 @@ rules:
   - list
   - watch
 - apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - delete
+  - get
+  - list
+  - watch
+- apiGroups:
   - khaos.stackzoo.io
   resources:
   - nodedestroyers
@@ -70,6 +79,32 @@ rules:
   - khaos.stackzoo.io
   resources:
   - poddestroyers/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - secretdestroyers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - secretdestroyers/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - secretdestroyers/status
   verbs:
   - get
   - patch
