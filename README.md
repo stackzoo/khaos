@@ -108,7 +108,6 @@ In vscode you need to create a `.vscode/launch.json` file similar to the followi
   }
 ```   
 
-## Examples
 
 
 ## Examples
@@ -378,6 +377,14 @@ khaos-controller-manager-8887957bf-5b8g9   1/1     Running               0      
 ```  
 
 > [!NOTE]  
-> If you encounter RBAC errors, you may need to grant yourself cluster-admin privileges or be logged in as admin.
+> If you encounter RBAC errors, you may need to grant yourself cluster-admin privileges or be logged in as admin.  
+  
 
 
+
+## Useful References
+
+- [kubuilder docs](https://book.kubebuilder.io/)
+- [programming kubernetes book](https://www.oreilly.com/library/view/programming-kubernetes/9781492047094/)
+- [kubernetes programming with go book](https://link.springer.com/book/10.1007/978-1-4842-9026-2)
+- [chaos engineering book](https://www.oreilly.com/library/view/chaos-engineering/9781492043850/)
