@@ -60,6 +60,16 @@ fmt: ## Run go fmt against code.
 vet: ## Run go vet against code.
 	go vet ./...
 
+
+.PHONY: cluster-up
+cluster-up: ## Create a kind cluster named "test-operator-cluster" with a master and 3 worker nodes.
+	kind create cluster --name test-operator-cluster --config examples/kind-cluster-config.yaml
+
+.PHONY: cluster-down
+cluster-down: ## Delete the kind cluster named "test-operator-cluster".
+	kind delete cluster --name test-operator-cluster
+
+
 .PHONY: test
 test: manifests generate fmt vet envtest ## Run tests.
 	KUBEBUILDER_ASSETS="$(shell $(ENVTEST) use $(ENVTEST_K8S_VERSION) --bin-dir $(LOCALBIN) -p path)" go test ./... -coverprofile cover.out
