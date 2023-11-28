@@ -1,0 +1,27 @@
+# permissions for end users to view podlabelchaos.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: podlabelchaos-viewer-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: khaos
+    app.kubernetes.io/part-of: khaos
+    app.kubernetes.io/managed-by: kustomize
+  name: podlabelchaos-viewer-role
+rules:
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - podlabelchaos
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - podlabelchaos/status
+  verbs:
+  - get

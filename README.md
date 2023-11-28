@@ -7,16 +7,17 @@
 A lightweight kubernetes operator to test cluster and application resilience via chaos engineering 💣 ☸️  
 
 ## Abstract
-**Khaos** is a streamlined Kubernetes [operator](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/) made with [kubebuilder](https://github.com/kubernetes-sigs/kubebuilder) and designed for executing [Chaos Engineering](https://en.wikipedia.org/wiki/Chaos_engineering) activities.  
+**Khaos** is a straightforward Kubernetes [operator](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/) made with [kubebuilder](https://github.com/kubernetes-sigs/kubebuilder) and designed for executing [Chaos Engineering](https://en.wikipedia.org/wiki/Chaos_engineering) activities.  
 Through the implementation of custom controllers and resources, Khaos facilitates the configuration and automation  
 of operations such as the targeted deletion of pods within a specified namespace, the removal of nodes from the cluster, the deletion of secrets and more.  
 
 ## Supported features
-- [X] Delete specified pods in specified namespace
-- [x] Delete specified cluster nodes
-- [X] Delete specified secrets in specified namespace  
-- [X] Inject resource constraints in the specified containers  of the specified deployment of the specified namespace
-- [X] Inject the specified command inside the pods of the specified deployment in the specified namespace (experimental).  
+- [X] Delete pods
+- [x] Delete cluster nodes
+- [X] Delete secrets
+- [X] Inject resource constraints in pods
+- [X] Add o remove labels in pods
+- [X] Exec commands inside pods (**experimental**).  
 
 
 ## Local Testing and Debugging
@@ -80,10 +81,11 @@ commandinjections.khaos.stackzoo.io        2023-11-28T12:55:25Z
 containerresourcechaos.khaos.stackzoo.io   2023-11-28T12:55:25Z
 nodedestroyers.khaos.stackzoo.io           2023-11-28T12:55:25Z
 poddestroyers.khaos.stackzoo.io            2023-11-28T12:55:25Z
+podlabelchaos.khaos.stackzoo.io            2023-11-28T12:55:25Z
 secretdestroyers.khaos.stackzoo.io         2023-11-28T12:55:25Z
 ```  
 
-In order to run the operator on your cluster (current context - i.e. whatever cluster `kubectl cluster-info` shows).) run:  
+In order to run the operator on your cluster (current context - i.e. whatever cluster `kubectl cluster-info` shows) run:  
 ```console
 make run
 ```  
@@ -112,16 +114,19 @@ In vscode you need to create a `.vscode/launch.json` file similar to the followi
 
 ## Examples
 
-<details>
-  <summary>Delete Pods</summary>
-
-Create a new namespace called `prod` and apply an example deployment:  
+In order to test the following examples, you can use the local *KinD* cluster (see the `Local Testing and Debugging` section).  
+Once you have the cluster up and running, procede to create a new namespace called `prod` and apply an example deployment:  
 
 ```console
 kubectl create namespace prod && kubectl apply -f examples/test-deployment.yaml
 ```  
 
-Wait for all the pods to be up and running and then apply the `PodDestroyer` manifest:  
+Now you can procede with the examples!  
+
+<details>
+  <summary>Delete Pods</summary>
+
+Wait for all the pods in the `prod` namespace to be up and running and then apply the `PodDestroyer` manifest:  
 
 ```yaml
 apiVersion: khaos.stackzoo.io/v1alpha1
@@ -143,7 +148,7 @@ kubectl apply -f examples/pod-destroyer.yaml
 ```
 
 Now you can observe 2 things:  
-1. the pods in prod namespace are being Terminating (and recreated by the replicaset):  
+1. the pods in prod namespace are being Terminated (and recreated by the replicaset):  
 ```console
 NAME                                READY   STATUS              RESTARTS   AGE
 nginx-deployment-7bf8c77b5b-5fvrc   1/1     Running             0          6s
@@ -168,7 +173,7 @@ nginx-deployment-7bf8c77b5b-gsprh   0/1     Terminating         0          33s
 nginx-deployment-7bf8c77b5b-gsprh   0/1     Terminating         0          33s
 nginx-deployment-7bf8c77b5b-gsprh   0/1     Terminating         0          33s
 ```  
-2. Our operator shows the reconciliation logic's logs:  
+1. Our operator shows the reconciliation logic's logs:  
 ```console   
 2023-11-28T14:07:18+01:00       INFO    Reconciling PodDestroyer: default/nginx-destroyer       {"controller": "poddestroyer", "controllerGroup": "khaos.stackzoo.io", "controllerKind": "PodDestroyer", "PodDestroyer": {"name":"nginx-destroyer","namespace":"default"}, "namespace": "default", "name": "nginx-destroyer", "reconcileID": "1e16a7d2-825a-4b46-b4e5-ac1228bc1c36"}
 2023-11-28T14:07:18+01:00       INFO    Selector: {map[app:nginx] []}   {"controller": "poddestroyer", "controllerGroup": "khaos.stackzoo.io", "controllerKind": "PodDestroyer", "PodDestroyer": {"name":"nginx-destroyer","namespace":"default"}, "namespace": "default", "name": "nginx-destroyer", "reconcileID": "1e16a7d2-825a-4b46-b4e5-ac1228bc1c36"}
@@ -372,6 +377,55 @@ spec:
 </details>  
 
 
+
+
+<details>
+  <summary>Modify Pod Labels</summary>  
+
+Apply the following `PodLabelChaos` manifest:  
+
+```yaml
+apiVersion: khaos.stackzoo.io/v1alpha1
+kind: PodLabelChaos
+metadata:
+  name: podlabelchaos-test
+spec:
+  deploymentName: nginx-deployment
+  namespace: prod
+  labels:
+    chaos: "true"
+  addLabels: true
+
+```  
+
+```console
+kubectl apply -f examples/pod-label-chaos.yaml
+```  
+
+Now retrieve one of the pod in the prod namespace in `yaml` format and take a look at the labels:  
+```yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2023-11-28T15:27:22Z"
+  generateName: nginx-deployment-6bb89bf6cd-
+  labels:
+    app: nginx
+    chaos: "true"
+    pod-template-hash: 6bb89bf6cd
+  name: nginx-deployment-6bb89bf6cd-52j42
+  namespace: prod
+
+```   
+
+
+</details>  
+
+
+
+
+
 <br/>  
 
 
@@ -379,7 +433,7 @@ spec:
 This repo contains a [github action](https://github.com/stackzoo/khaos/blob/main/.github/workflows/release.yaml) that publish  the operator *oci image*  to *github registry* when new releases tag are pushed to the main branch.  
 In order to install the operator as a pod in the cluster you can leverage one of the *make* targets:  
 ```console
-make deploy IMG=ghcr.io/stackzoo/khaos:0.0.3
+make deploy IMG=ghcr.io/stackzoo/khaos:0.0.4
 ```  
 
 This command will install all the required *CRDs* and *RBAC manifests* and then start the operator as a pod:  

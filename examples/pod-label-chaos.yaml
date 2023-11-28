@@ -1,0 +1,10 @@
+apiVersion: khaos.stackzoo.io/v1alpha1
+kind: PodLabelChaos
+metadata:
+  name: podlabelchaos-test
+spec:
+  deploymentName: nginx-deployment
+  namespace: prod
+  labels:
+    chaos: "true"
+  addLabels: true

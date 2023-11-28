@@ -33,6 +33,41 @@ rules:
   - list
   - watch
 - apiGroups:
+  - apps
+  resources:
+  - deployments
+  verbs:
+  - get
+  - list
+  - update
+  - watch
+- apiGroups:
+  - chaos.stackzoo.io
+  resources:
+  - podlabelchaos
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - chaos.stackzoo.io
+  resources:
+  - podlabelchaos/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - chaos.stackzoo.io
+  resources:
+  - podlabelchaos/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
   - khaos.stackzoo.io
   resources:
   - commandinjections
