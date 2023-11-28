@@ -7,12 +7,47 @@ rules:
 - apiGroups:
   - ""
   resources:
+  - nodes
+  verbs:
+  - delete
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
   - pods
   verbs:
   - delete
   - get
   - list
   - watch
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - nodedestroyers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - nodedestroyers/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - nodedestroyers/status
+  verbs:
+  - get
+  - patch
+  - update
 - apiGroups:
   - khaos.stackzoo.io
   resources:

@@ -1,0 +1,31 @@
+# permissions for end users to edit nodedestroyers.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: nodedestroyer-editor-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: khaos
+    app.kubernetes.io/part-of: khaos
+    app.kubernetes.io/managed-by: kustomize
+  name: nodedestroyer-editor-role
+rules:
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - nodedestroyers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - nodedestroyers/status
+  verbs:
+  - get

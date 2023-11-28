@@ -1,0 +1,8 @@
+apiVersion: khaos.stackzoo.io/v1alpha1
+kind: NodeDestroyer
+metadata:
+  name: example-node-destroyer
+spec:
+  nodeNames:
+    - test-operator-cluster-worker
+    - test-operator-cluster-worker3
