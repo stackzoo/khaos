@@ -5,7 +5,7 @@ metadata:
   namespace: prod
 spec:
   namespace: prod
-  podName: nginx-deployment  # Replace <pod-name> with the actual pod name
+  DeploymentName: nginx-deployment
   containerName: nginx
-  maxCPU: "240m"  # Set the desired CPU limit (e.g., 500m for 0.5 CPU)
+  maxCPU: "666m"  # Set the desired CPU limit (e.g., 500m for 0.5 CPU)
   maxRAM: "512Mi"  # Set the desired RAM limit (e.g., 512Mi for 512 Megabytes)

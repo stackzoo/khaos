@@ -35,6 +35,8 @@ spec:
           spec:
             description: ContainerResourceChaosSpec defines the desired state of ContainerResourceChaos
             properties:
+              DeploymentName:
+                type: string
               containerName:
                 type: string
               maxCPU:
@@ -42,8 +44,6 @@ spec:
               maxRAM:
                 type: string
               namespace:
-                type: string
-              podName:
                 type: string
             type: object
           status:

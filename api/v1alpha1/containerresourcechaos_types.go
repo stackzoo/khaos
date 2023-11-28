@@ -26,7 +26,7 @@ import (
 // ContainerResourceChaosSpec defines the desired state of ContainerResourceChaos
 type ContainerResourceChaosSpec struct {
 	Namespace      string `json:"namespace,omitempty"`
-	DeploymentName string `json:"podName,omitempty"`
+	DeploymentName string `json:"DeploymentName,omitempty"`
 	ContainerName  string `json:"containerName,omitempty"`
 	MaxCPU         string `json:"maxCPU,omitempty"`
 	MaxRAM         string `json:"maxRAM,omitempty"`
