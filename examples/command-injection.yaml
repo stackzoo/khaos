@@ -1,0 +1,8 @@
+apiVersion: khaos.stackzoo.io/v1alpha1
+kind: CommandInjection
+metadata:
+  name: example-command-injection
+spec:
+  namespace: prod
+  deployment: nginx
+  command: "echo 'Helloo from Chaos Engineering!!'"

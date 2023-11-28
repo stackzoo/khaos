@@ -1,0 +1,12 @@
+apiVersion: khaos.stackzoo.io/v1alpha1
+kind: CommandInjection
+metadata:
+  labels:
+    app.kubernetes.io/name: commandinjection
+    app.kubernetes.io/instance: commandinjection-sample
+    app.kubernetes.io/part-of: khaos
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: khaos
+  name: commandinjection-sample
+spec:
+  # TODO(user): Add fields here

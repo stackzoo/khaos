@@ -6,6 +6,7 @@ resources:
 - bases/khaos.stackzoo.io_nodedestroyers.yaml
 - bases/khaos.stackzoo.io_secretdestroyers.yaml
 - bases/khaos.stackzoo.io_containerresourcechaos.yaml
+- bases/khaos.stackzoo.io_commandinjections.yaml
 #+kubebuilder:scaffold:crdkustomizeresource
 
 patches:
@@ -15,6 +16,7 @@ patches:
 #- path: patches/webhook_in_nodedestroyers.yaml
 #- path: patches/webhook_in_secretdestroyers.yaml
 #- path: patches/webhook_in_containerresourcechaos.yaml
+#- path: patches/webhook_in_commandinjections.yaml
 #+kubebuilder:scaffold:crdkustomizewebhookpatch
 
 # [CERTMANAGER] To enable cert-manager, uncomment all the sections with [CERTMANAGER] prefix.
@@ -23,6 +25,7 @@ patches:
 #- path: patches/cainjection_in_nodedestroyers.yaml
 #- path: patches/cainjection_in_secretdestroyers.yaml
 #- path: patches/cainjection_in_containerresourcechaos.yaml
+#- path: patches/cainjection_in_commandinjections.yaml
 #+kubebuilder:scaffold:crdkustomizecainjectionpatch
 
 # [WEBHOOK] To enable webhook, uncomment the following section

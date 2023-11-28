@@ -35,6 +35,32 @@ rules:
 - apiGroups:
   - khaos.stackzoo.io
   resources:
+  - commandinjections
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - commandinjections/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - commandinjections/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
   - containerresourcechaos
   verbs:
   - create
