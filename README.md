@@ -66,7 +66,7 @@ Build Dependencies
   envtest          Download envtest-setup locally if necessary.
 ```   
 
-You can spin up a local dev cluster with [KinD](https://kind.sigs.k8s.io/) with the following command:  
+You can spin up a local dev cluster with [KinD](https://kind.sigs.k8s.io/) via the following command:  
 ```console
 make cluster-up
 ```   
@@ -122,6 +122,20 @@ kubectl create namespace prod && kubectl apply -f examples/test-deployment.yaml
 ```  
 
 Wait for all the pods to be up and running and then apply the `PodDestroyer` manifest:  
+
+```yaml
+apiVersion: khaos.stackzoo.io/v1alpha1
+kind: PodDestroyer
+metadata:
+  name: nginx-destroyer
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  maxPods: 9
+  namespace: prod
+```  
+
 
 
 ```console
