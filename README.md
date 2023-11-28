@@ -3,7 +3,12 @@
 <br/>
 <img src="docs/images/klogo.png" alt="logo" width="230" height="230">  
 <br/>
-A lightweight kubernetes operator to test cluster resilience via chaos engineering 💥🌪 ☸️
+A lightweight kubernetes operator to test cluster resilience via chaos engineering 💥🌪 ☸️  
+
+## Abstract
+**Khaos** is a streamlined Kubernetes [operator](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/) made with [kubebuilder](https://github.com/kubernetes-sigs/kubebuilder) and designed for executing [Chaos Engineering](https://en.wikipedia.org/wiki/Chaos_engineering) activities.  
+Through the implementation of custom controllers and resources, Khaos facilitates the configuration and automation  
+of operations such as the targeted deletion of pods within a specified namespace, the removal of nodes from the cluster, and more.  
 
 ## Instructions
 ```console
