@@ -21,6 +21,7 @@ rules:
   - delete
   - get
   - list
+  - update
   - watch
 - apiGroups:
   - ""
@@ -31,6 +32,32 @@ rules:
   - get
   - list
   - watch
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - containerresourcechaos
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - containerresourcechaos/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - containerresourcechaos/status
+  verbs:
+  - get
+  - patch
+  - update
 - apiGroups:
   - khaos.stackzoo.io
   resources:

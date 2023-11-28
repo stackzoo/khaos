@@ -3,4 +3,5 @@ resources:
 - khaos_v1alpha1_poddestroyer.yaml
 - khaos_v1alpha1_nodedestroyer.yaml
 - khaos_v1alpha1_secretdestroyer.yaml
+- khaos_v1alpha1_containerresourcechaos.yaml
 #+kubebuilder:scaffold:manifestskustomizesamples

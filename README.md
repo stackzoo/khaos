@@ -14,7 +14,7 @@ of operations such as the targeted deletion of pods within a specified namespace
 - [X] Delete specified pods in specified namespace
 - [x] Delete specified cluster nodes
 - [X] Delete specified secrets in specified namespace  
-- [ ] Inject resource constraints in containers  
+- [X] Inject resource constraints in the specified containers  of the specified deployment of the specified namespace
 
 
 
