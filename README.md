@@ -124,7 +124,7 @@ kubectl create namespace prod && kubectl apply -f examples/test-deployment.yaml
 Now you can procede with the examples!  
 
 <details>
-  <summary>Delete Pods</summary>
+  <summary>DELETE PODS</summary>
 
 Wait for all the pods in the `prod` namespace to be up and running and then apply the `PodDestroyer` manifest:  
 
@@ -224,7 +224,7 @@ The `status` spec tells you how many pods have been successfully destroyed.
 
 
 <details>
-  <summary>Delete Nodes</summary>
+  <summary>DELETE NODES</summary>
 
 First, retrieve nodes info for your cluster:  
 ```console
@@ -273,7 +273,7 @@ As you can see the operator succesfully removed the specified nodes.
 
 
 <details>
-  <summary>Delete Secrets</summary>
+  <summary>DELETE SECRETS</summary>
 
 First create a new kubernetes secret (empty secret is fine):  
 
@@ -315,7 +315,7 @@ The specified secret was successfully removed.
 
 
 <details>
-  <summary>Apply New Container Resource Limits</summary>  
+  <summary>APPLY NEW CONTAINER RESOURCE LIMITS</summary>  
 
 Apply the following `ContainerResourceChaos` manifest:  
 
@@ -380,7 +380,7 @@ spec:
 
 
 <details>
-  <summary>Modify Pod Labels</summary>  
+  <summary>MODIFY POD LABELS</summary>  
 
 Apply the following `PodLabelChaos` manifest:  
 
