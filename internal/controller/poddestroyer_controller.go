@@ -50,6 +50,7 @@ type PodDestroyerReconciler struct {
 //
 // For more details, check Reconcile and its Result here:
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.16.3/pkg/reconcile
+// Reconcile is part of the main kubernetes reconciliation loop
 func (r *PodDestroyerReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	logger := log.FromContext(ctx)
 
@@ -64,10 +65,15 @@ func (r *PodDestroyerReconciler) Reconcile(ctx context.Context, req ctrl.Request
 	logger.Info(fmt.Sprintf("Reconciling PodDestroyer: %s", req.NamespacedName))
 	logger.Info(fmt.Sprintf("Selector: %v", podDestroyer.Spec.Selector))
 	logger.Info(fmt.Sprintf("MaxPods: %d", podDestroyer.Spec.MaxPods))
+	logger.Info(fmt.Sprintf("Namespace: %s", podDestroyer.Spec.Namespace))
 
-	// Fetch pods matching the selector
+	// Fetch pods matching the selector and namespace
 	podList := &corev1.PodList{}
-	if err := r.List(ctx, podList, client.InNamespace(req.Namespace), client.MatchingLabels(podDestroyer.Spec.Selector.MatchLabels)); err != nil {
+	opts := []client.ListOption{
+		client.InNamespace(podDestroyer.Spec.Namespace),
+		client.MatchingLabels(podDestroyer.Spec.Selector.MatchLabels),
+	}
+	if err := r.List(ctx, podList, opts...); err != nil {
 		logger.Error(err, "unable to list pods")
 		return reconcile.Result{}, err
 	}

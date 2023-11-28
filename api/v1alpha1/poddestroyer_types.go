@@ -38,6 +38,9 @@ type PodDestroyerSpec struct {
 
 	// MaxPods is the maximum number of pods to destroy simultaneously.
 	MaxPods int32 `json:"maxPods,omitempty"`
+
+	// Namespace specifies the namespace where pods should be targeted.
+	Namespace string `json:"namespace,omitempty"`
 }
 
 // PodDestroyerStatus defines the observed state of PodDestroyer

@@ -38,6 +38,10 @@ spec:
                 description: MaxPods is the maximum number of pods to destroy simultaneously.
                 format: int32
                 type: integer
+              namespace:
+                description: Namespace specifies the namespace where pods should be
+                  targeted.
+                type: string
               selector:
                 description: Selector specifies the pods to be targeted for destruction.
                 properties:
