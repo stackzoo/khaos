@@ -26,14 +26,16 @@ NAME                              CREATED AT
 poddestroyers.khaos.stackzoo.io   2023-11-27T16:29:37Z
 ```  
 
-## Testing
+## Local Debug
   
 ```console
 make run
 && kubectl apply -f examples
 ```  
 
-Debug in VSCODE (`.vscode/launch.json`):
+In order to debug this project locally, I strongly suggest using [vscode](https://code.visualstudio.com/).  
+
+In vscode you need to create a`.vscode/launch.json` similar to the following:  
 ```json
 {
     "version": "0.2.0",
