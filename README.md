@@ -10,6 +10,15 @@ A lightweight kubernetes operator to test cluster resilience via chaos engineeri
 Through the implementation of custom controllers and resources, Khaos facilitates the configuration and automation  
 of operations such as the targeted deletion of pods within a specified namespace, the removal of nodes from the cluster, the deletion of secrets and more.  
 
+## Supported features
+- [X] Delete specified pods in specified namespace
+- [x] Delete specified cluster nodes
+- [X] Delete specified secrets in specified namespace  
+- [ ] Inject resource constraints in containers  
+
+
+
+
 ## Instructions
 ```console
 go mod init github.com/stackzoo/khaos && 
