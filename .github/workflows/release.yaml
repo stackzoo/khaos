@@ -1,0 +1,65 @@
+name: goreleaser
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+  # packages: write
+  # issues: write
+
+jobs:
+  goreleaser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - run: git fetch --force --tags
+      - uses: actions/setup-go@v4
+        with:
+          go-version: stable
+      - uses: goreleaser/goreleaser-action@v4
+        with:
+          # either 'goreleaser' (default) or 'goreleaser-pro':
+          distribution: goreleaser
+          version: latest
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  build-and-publish-oci:
+    runs-on: ubuntu-latest
+    permissions: write-all
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '1.20'
+
+      - name: Convert Repository Name to Lowercase
+        id: lowercase
+        run: echo "::set-output name=name::$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')"
+
+      - name: Extract Version
+        id: tagger
+        uses: battila7/get-version-action@v2
+
+      - name: Print Version
+        run: |
+          echo ${{steps.tagger.outputs.version}}
+          echo ${{steps.tagger.outputs.version-without-v}}
+
+      - name: Build the OCI Image
+        run: docker build -t ghcr.io/${{ steps.lowercase.outputs.name }}:${{ steps.tagger.outputs.version-without-v }} .
+        working-directory: .
+      - name: Login to GitHub Packages
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Push the OCI Image
+        run: docker push ghcr.io/${{ steps.lowercase.outputs.name }}:${{ steps.tagger.outputs.version-without-v }}
