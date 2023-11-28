@@ -369,6 +369,15 @@ In order to install the operator as a pod in the cluster you can leverage one of
 make deploy IMG=ghcr.io/stackzoo/khaos:0.0.3
 ```  
 
+This command will install all the required *CRDs* and *RBAC manifests* and then start the operator as a pod:  
+```console
+kubectl get pods -n khaos-system
 
+NAME                                       READY   STATUS             RESTARTS   AGE
+khaos-controller-manager-8887957bf-5b8g9   1/1     Running               0       107s
+```  
+
+> [!NOTE]  
+> If you encounter RBAC errors, you may need to grant yourself cluster-admin privileges or be logged in as admin.
 
 
