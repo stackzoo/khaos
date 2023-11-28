@@ -1,4 +1,4 @@
-name: goreleaser
+name: releaser
 
 on:
   push:
@@ -11,24 +11,14 @@ permissions:
   # issues: write
 
 jobs:
-  goreleaser:
+  releaser:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - run: git fetch --force --tags
-      - uses: actions/setup-go@v4
-        with:
-          go-version: stable
-      - uses: goreleaser/goreleaser-action@v4
-        with:
-          # either 'goreleaser' (default) or 'goreleaser-pro':
-          distribution: goreleaser
-          version: latest
-          args: release --clean
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - uses: actions/checkout@v3
+    - uses: ncipollo/release-action@v1
+
   build-and-publish-oci:
     runs-on: ubuntu-latest
     permissions: write-all
@@ -40,7 +30,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: '1.20'
+          go-version: '1.21'
 
       - name: Convert Repository Name to Lowercase
         id: lowercase
