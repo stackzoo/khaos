@@ -1,5 +1,5 @@
 # Khaos
-<img src="docs/images/klogo.png" alt="logo" width="170" height="170">  
+<img src="docs/images/klogo.png" alt="logo" width="230" height="230">  
 <br/>
 A lightweight kubernetes operator to test cluster resilience via chaos engineering 💥🌪 ☸️
 
