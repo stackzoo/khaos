@@ -1,0 +1,8 @@
+apiVersion: khaos.stackzoo.io/v1alpha1
+kind: ConfigMapDestroyer
+metadata:
+  name: example-configmap-destroyer
+spec:
+  namespace: prod
+  configMapNames:
+    - test-configmap

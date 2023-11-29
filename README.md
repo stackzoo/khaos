@@ -16,6 +16,7 @@ of operations such as the targeted deletion of pods within a specified namespace
 - [X] Delete pods
 - [x] Delete cluster nodes
 - [X] Delete secrets
+- [X] Delete configmaps
 - [X] Inject resource constraints in pods
 - [X] Add o remove labels in pods
 - [X] Exec commands inside pods (**experimental**).  
@@ -78,12 +79,13 @@ Install and list the operator CRDs with the following command:
 make install && kubectl get crds
 
 NAME                                       CREATED AT
-commandinjections.khaos.stackzoo.io        2023-11-28T12:55:25Z
-containerresourcechaos.khaos.stackzoo.io   2023-11-28T12:55:25Z
-nodedestroyers.khaos.stackzoo.io           2023-11-28T12:55:25Z
-poddestroyers.khaos.stackzoo.io            2023-11-28T12:55:25Z
-podlabelchaos.khaos.stackzoo.io            2023-11-28T12:55:25Z
-secretdestroyers.khaos.stackzoo.io         2023-11-28T12:55:25Z
+commandinjections.khaos.stackzoo.io        2023-11-29T08:09:59Z
+configmapdestroyers.khaos.stackzoo.io      2023-11-29T08:09:59Z
+containerresourcechaos.khaos.stackzoo.io   2023-11-29T08:09:59Z
+nodedestroyers.khaos.stackzoo.io           2023-11-29T08:09:59Z
+poddestroyers.khaos.stackzoo.io            2023-11-29T08:09:59Z
+podlabelchaos.khaos.stackzoo.io            2023-11-29T08:09:59Z
+secretdestroyers.khaos.stackzoo.io         2023-11-29T08:09:59Z
 ```  
 
 In order to run the operator on your cluster (current context - i.e. whatever cluster `kubectl cluster-info` shows) run:  
@@ -311,6 +313,68 @@ No resources found in prod namespace.
 The specified secret was successfully removed.  
 
 
+
+</details>  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<details>
+  <summary>DELETE CONFIGMAPS</summary>
+
+First create a new kubernetes configmap:  
+
+```console
+kubectl create configmap test-configmap --namespace=prod --from-literal=message=ready && kubectl -n prod get configmap
+
+configmap/test-configmap created
+
+NAME               DATA   AGE
+kube-root-ca.crt   1      2m24s
+test-configmap     1      1s
+
+```  
+
+Now apply the following `ConfigMapDestroyer` manifest:  
+
+```yaml
+apiVersion: khaos.stackzoo.io/v1alpha1
+kind: ConfigMapDestroyer
+metadata:
+  name: example-configmap-destroyer
+spec:
+  namespace: prod
+  configMapNames:
+    - test-configmap
+```
+
+```console
+kubectl apply -f examples/config-map-destroyer.yaml
+```  
+
+Try to list all the configmaps in the `prod` namespace:  
+```console
+kubectl -n prod get configmap
+
+NAME               DATA   AGE
+kube-root-ca.crt   1      9m26s
+```  
+
+The specified configmap was successfully removed.  
 
 </details>  
 

@@ -7,6 +7,15 @@ rules:
 - apiGroups:
   - ""
   resources:
+  - configmaps
+  verbs:
+  - delete
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
   - nodes
   verbs:
   - delete
@@ -89,6 +98,32 @@ rules:
   - khaos.stackzoo.io
   resources:
   - commandinjections/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - configmapdestroyers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - configmapdestroyers/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - configmapdestroyers/status
   verbs:
   - get
   - patch

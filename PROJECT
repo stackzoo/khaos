@@ -62,4 +62,13 @@ resources:
   kind: PodLabelChaos
   path: stackzoo.io/khaos/api/v1alpha1
   version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: stackzoo.io
+  group: khaos
+  kind: ConfigMapDestroyer
+  path: stackzoo.io/khaos/api/v1alpha1
+  version: v1alpha1
 version: "3"
