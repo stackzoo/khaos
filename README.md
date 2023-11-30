@@ -13,6 +13,9 @@ Through the implementation of custom controllers and resources, Khaos facilitate
 Khaos is an **unopinionated** operator, in the sense that it provides simple and *atomic primitives* that engineers can use as building blocks in order to compose their preferred chaos strategy.  
 Currently, Khaos does not implement *cronjobs*; any scheduling of Khaos Custom Resources is delegated to external logic outside the cluster, possibly through a GitOps approach.  
 
+> [!WARNING]  
+> This operator will introduce fault and unpredicatbility in you rinfrastructure, use with caution  
+
 ## Supported features
 - [X] Delete pods
 - [x] Delete cluster nodes
@@ -20,7 +23,9 @@ Currently, Khaos does not implement *cronjobs*; any scheduling of Khaos Custom R
 - [X] Delete configmaps
 - [X] Inject resource constraints in pods
 - [X] Add o remove labels in pods
+- [X] Flood api server with calls
 - [X] Exec commands inside pods (**experimental**).  
+
 
 
 ## Local Testing and Debugging
@@ -80,13 +85,14 @@ Install and list the operator CRDs with the following command:
 make install && kubectl get crds
 
 NAME                                       CREATED AT
-commandinjections.khaos.stackzoo.io        2023-11-29T08:09:59Z
-configmapdestroyers.khaos.stackzoo.io      2023-11-29T08:09:59Z
-containerresourcechaos.khaos.stackzoo.io   2023-11-29T08:09:59Z
-nodedestroyers.khaos.stackzoo.io           2023-11-29T08:09:59Z
-poddestroyers.khaos.stackzoo.io            2023-11-29T08:09:59Z
-podlabelchaos.khaos.stackzoo.io            2023-11-29T08:09:59Z
-secretdestroyers.khaos.stackzoo.io         2023-11-29T08:09:59Z
+apiserveroverloads.khaos.stackzoo.io       2023-11-30T06:25:59Z
+commandinjections.khaos.stackzoo.io        2023-11-30T06:25:59Z
+configmapdestroyers.khaos.stackzoo.io      2023-11-30T06:25:59Z
+containerresourcechaos.khaos.stackzoo.io   2023-11-30T06:25:59Z
+nodedestroyers.khaos.stackzoo.io           2023-11-30T06:25:59Z
+poddestroyers.khaos.stackzoo.io            2023-11-30T06:25:59Z
+podlabelchaos.khaos.stackzoo.io            2023-11-30T06:25:59Z
+secretdestroyers.khaos.stackzoo.io         2023-11-30T06:25:59Z
 ```  
 
 In order to run the operator on your cluster (current context - i.e. whatever cluster `kubectl cluster-info` shows) run:  

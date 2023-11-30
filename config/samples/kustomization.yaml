@@ -7,4 +7,5 @@ resources:
 - khaos_v1alpha1_commandinjection.yaml
 - khaos_v1alpha1_podlabelchaos.yaml
 - khaos_v1alpha1_configmapdestroyer.yaml
+- khaos_v1alpha1_apiserveroverload.yaml
 #+kubebuilder:scaffold:manifestskustomizesamples

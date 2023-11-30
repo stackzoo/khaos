@@ -16,6 +16,14 @@ rules:
 - apiGroups:
   - ""
   resources:
+  - namespaces
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
   - nodes
   verbs:
   - delete
@@ -38,6 +46,14 @@ rules:
   - secrets
   verbs:
   - delete
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - services
+  verbs:
   - get
   - list
   - watch
@@ -72,6 +88,28 @@ rules:
   - chaos.stackzoo.io
   resources:
   - podlabelchaos/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - apiserveroverloads
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - apiserveroverloads/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - apiserveroverloads/status
   verbs:
   - get
   - patch

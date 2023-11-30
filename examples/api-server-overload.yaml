@@ -1,0 +1,4 @@
+apiVersion: khaos.stackzoo.io/v1alpha1
+kind: ApiServerOverload
+metadata:
+  name: apiserveroverload-sample
