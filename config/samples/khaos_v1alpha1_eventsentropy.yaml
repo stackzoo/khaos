@@ -1,0 +1,12 @@
+apiVersion: khaos.stackzoo.io/v1alpha1
+kind: EventsEntropy
+metadata:
+  labels:
+    app.kubernetes.io/name: eventsentropy
+    app.kubernetes.io/instance: eventsentropy-sample
+    app.kubernetes.io/part-of: khaos
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: khaos
+  name: eventsentropy-sample
+spec:
+  # TODO(user): Add fields here

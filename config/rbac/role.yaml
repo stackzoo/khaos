@@ -16,6 +16,12 @@ rules:
 - apiGroups:
   - ""
   resources:
+  - events
+  verbs:
+  - create
+- apiGroups:
+  - ""
+  resources:
   - namespaces
   verbs:
   - get
@@ -188,6 +194,26 @@ rules:
   - khaos.stackzoo.io
   resources:
   - containerresourcechaos/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - eventsentropy
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - eventsentropy/status
   verbs:
   - get
   - patch

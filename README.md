@@ -24,6 +24,7 @@ Currently, Khaos does not implement *cronjobs*; any scheduling of Khaos Custom R
 - [X] Inject resource constraints in pods
 - [X] Add o remove labels in pods
 - [X] Flood api server with calls
+- [X] Create custom kubernetes events
 - [X] Exec commands inside pods (**experimental**).  
 
 
@@ -85,14 +86,15 @@ Install and list the operator CRDs with the following command:
 make install && kubectl get crds
 
 NAME                                       CREATED AT
-apiserveroverloads.khaos.stackzoo.io       2023-11-30T06:25:59Z
-commandinjections.khaos.stackzoo.io        2023-11-30T06:25:59Z
-configmapdestroyers.khaos.stackzoo.io      2023-11-30T06:25:59Z
-containerresourcechaos.khaos.stackzoo.io   2023-11-30T06:25:59Z
-nodedestroyers.khaos.stackzoo.io           2023-11-30T06:25:59Z
-poddestroyers.khaos.stackzoo.io            2023-11-30T06:25:59Z
-podlabelchaos.khaos.stackzoo.io            2023-11-30T06:25:59Z
-secretdestroyers.khaos.stackzoo.io         2023-11-30T06:25:59Z
+apiserveroverloads.khaos.stackzoo.io       2023-11-30T08:43:49Z
+commandinjections.khaos.stackzoo.io        2023-11-30T08:43:49Z
+configmapdestroyers.khaos.stackzoo.io      2023-11-30T08:43:49Z
+containerresourcechaos.khaos.stackzoo.io   2023-11-30T08:43:49Z
+eventsentropies.khaos.stackzoo.io          2023-11-30T08:43:49Z
+nodedestroyers.khaos.stackzoo.io           2023-11-30T08:43:49Z
+poddestroyers.khaos.stackzoo.io            2023-11-30T08:43:49Z
+podlabelchaos.khaos.stackzoo.io            2023-11-30T08:43:49Z
+secretdestroyers.khaos.stackzoo.io         2023-11-30T08:43:49Z
 ```  
 
 In order to run the operator on your cluster (current context - i.e. whatever cluster `kubectl cluster-info` shows) run:  
@@ -122,7 +124,7 @@ In vscode you need to create a `.vscode/launch.json` file similar to the followi
 
 
 
-## Examples
+## Some Examples
 
 In order to test the following examples, you can use the local *KinD* cluster (see the `Local Testing and Debugging` section).  
 Once you have the cluster up and running, procede to create a new namespace called `prod` and apply an example deployment:  
@@ -477,6 +479,60 @@ metadata:
 
 
 </details>  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<details>
+  <summary>CREATE CUSTOM KUBERNETES EVENTS</summary>  
+
+Apply the following `EventsEntropy` manifest:  
+
+```yaml
+apiVersion: khaos.stackzoo.io/v1alpha1
+kind: EventsEntropy
+metadata:
+  name: example-eventsentropy
+spec:
+  events:
+    - "Custom event 1 with some gibberish - dfsdfsdffdgt egeg4e 😊"
+    - "Custom event 2 - with some gibberish dfsdfsdffdgt 676565 🥴"
+    - "Custom event 3 - with some gibberish 8/ihfwgf sufdh  🤪"
+
+```  
+
+```console
+kubectl apply -f examples/events-entropy.yaml
+```  
+
+Now retrieve kubernetes events via kubectl:  
+```console
+kubectl get events | grep gibberish
+
+<unknown>               Custom event 1 with some gibberish - dfsdfsdffdgt egeg4e 😊
+<unknown>               Custom event 3 - with some gibberish 8/ihfwgf sufdh  🤪
+<unknown>               Custom event 2 - with some gibberish dfsdfsdffdgt 676565 🥴
+
+```   
+
+
+</details>  
+
+
+
+
+
 
 
 

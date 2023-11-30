@@ -1,0 +1,9 @@
+apiVersion: khaos.stackzoo.io/v1alpha1
+kind: EventsEntropy
+metadata:
+  name: example-eventsentropy
+spec:
+  events:
+    - "Custom event 1 with some gibberish - dfsdfsdffdgt egeg4e 😊"
+    - "Custom event 2 - with some gibberish dfsdfsdffdgt 676565 🥴"
+    - "Custom event 3 - with some gibberish 8/ihfwgf sufdh  🤪"

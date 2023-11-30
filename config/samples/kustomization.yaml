@@ -8,4 +8,5 @@ resources:
 - khaos_v1alpha1_podlabelchaos.yaml
 - khaos_v1alpha1_configmapdestroyer.yaml
 - khaos_v1alpha1_apiserveroverload.yaml
+- khaos_v1alpha1_eventsentropy.yaml
 #+kubebuilder:scaffold:manifestskustomizesamples
