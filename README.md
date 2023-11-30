@@ -14,7 +14,7 @@ Khaos is an **unopinionated** operator, in the sense that it provides simple and
 Currently, Khaos does not implement *cronjobs*; any scheduling of Khaos Custom Resources is delegated to external logic outside the cluster, possibly through a GitOps approach.  
 
 > [!WARNING]  
-> This operator will introduce faults and unpredicatbility in you rinfrastructure, use with caution  
+> This operator will introduce faults and unpredicatbility in your infrastructure, use with caution  
 
 ## Supported features
 - [X] Delete pods
@@ -193,7 +193,7 @@ nginx-deployment-7bf8c77b5b-gsprh   0/1     Terminating         0          33s
 2023-11-28T14:07:18+01:00       INFO    Namespace: prod {"controller": "poddestroyer", "controllerGroup": "khaos.stackzoo.io", "controllerKind": "PodDestroyer", "PodDestroyer": {"name":"nginx-destroyer","namespace":"default"}, "namespace": "default", "name": "nginx-destroyer", "reconcileID": "1e16a7d2-825a-4b46-b4e5-ac1228bc1c36"}
 ```  
 
-Now we can inspect the status of our PodDestroyer custom resource:  
+Now we can inspect the status of our PodDestroyer object:  
 ```console 
 kubectl get poddestroyer
 
@@ -545,7 +545,7 @@ kubectl get events | grep gibberish
 This repo contains a [github action](https://github.com/stackzoo/khaos/blob/main/.github/workflows/release.yaml) that publish  the operator *oci image*  to *github registry* when new releases tag are pushed to the main branch.  
 In order to install the operator as a pod in the cluster you can leverage one of the *make* targets:  
 ```console
-make deploy IMG=ghcr.io/stackzoo/khaos:0.0.4
+make deploy IMG=ghcr.io/stackzoo/khaos:0.0.7
 ```  
 
 This command will install all the required *CRDs* and *RBAC manifests* and then start the operator as a pod:  
