@@ -14,7 +14,7 @@ Khaos is an **unopinionated** operator, in the sense that it provides simple and
 Currently, Khaos does not implement *cronjobs*; any scheduling of Khaos Custom Resources is delegated to external logic outside the cluster, possibly through a GitOps approach.  
 
 > [!WARNING]  
-> This operator will introduce fault and unpredicatbility in you rinfrastructure, use with caution  
+> This operator will introduce faults and unpredicatbility in you rinfrastructure, use with caution  
 
 ## Supported features
 - [X] Delete pods
