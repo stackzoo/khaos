@@ -24,6 +24,7 @@ Currently, Khaos does not implement *cronjobs*; any scheduling of Khaos Custom R
 - [X] Inject resource constraints in pods
 - [X] Add o remove labels in pods
 - [X] Flood api server with calls
+- [X] Consume resources in a namespace
 - [X] Create custom kubernetes events
 - [X] Exec commands inside pods (**experimental**).  
 
@@ -81,20 +82,22 @@ You can spin up a local dev cluster with [KinD](https://kind.sigs.k8s.io/) via t
 make cluster-up
 ```   
 
-Install and list the operator CRDs with the following command:  
+Install and list all the available operator's CRDs with the following command:  
 ```console
 make install && kubectl get crds
 
 NAME                                       CREATED AT
-apiserveroverloads.khaos.stackzoo.io       2023-11-30T08:43:49Z
-commandinjections.khaos.stackzoo.io        2023-11-30T08:43:49Z
-configmapdestroyers.khaos.stackzoo.io      2023-11-30T08:43:49Z
-containerresourcechaos.khaos.stackzoo.io   2023-11-30T08:43:49Z
-eventsentropies.khaos.stackzoo.io          2023-11-30T08:43:49Z
-nodedestroyers.khaos.stackzoo.io           2023-11-30T08:43:49Z
-poddestroyers.khaos.stackzoo.io            2023-11-30T08:43:49Z
-podlabelchaos.khaos.stackzoo.io            2023-11-30T08:43:49Z
-secretdestroyers.khaos.stackzoo.io         2023-11-30T08:43:49Z
+apiserveroverloads.khaos.stackzoo.io          2023-11-30T12:51:02Z
+commandinjections.khaos.stackzoo.io           2023-11-30T12:51:02Z
+configmapdestroyers.khaos.stackzoo.io         2023-11-30T12:51:02Z
+consumenamespaceresources.khaos.stackzoo.io   2023-11-30T13:58:09Z
+containerresourcechaos.khaos.stackzoo.io      2023-11-30T12:51:02Z
+eventsentropies.khaos.stackzoo.io             2023-11-30T12:51:02Z
+nodedestroyers.khaos.stackzoo.io              2023-11-30T12:51:02Z
+poddestroyers.khaos.stackzoo.io               2023-11-30T12:51:02Z
+podlabelchaos.khaos.stackzoo.io               2023-11-30T12:51:02Z
+secretdestroyers.khaos.stackzoo.io            2023-11-30T12:51:02Z
+serviceaccountremovers.khaos.stackzoo.io      2023-11-30T12:51:02Z
 ```  
 
 In order to run the operator on your cluster (current context - i.e. whatever cluster `kubectl cluster-info` shows) run:  
@@ -482,15 +485,97 @@ metadata:
 
 
 
+<details>
+  <summary>CONSUME NAMESPACE RESOURCES</summary>  
+This feature of the operator will spin up a busybox deployment with the specified replicas in the specified namespace.  
+All the busybox's pod will execute the following command:  
+
+```console
+while true; do echo 'Doing extensive tasks'; sleep 1; done
+```  
+
+
+First of all we need to install the **metrics server** on our cluster:  
+```console
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml  \
+&& kubectl patch -n kube-system deployment metrics-server --type=json -p '[{"op":"add","path":"/spec/template/spec/containers/0/args/-","value":"--kubelet-insecure-tls"}]'
+```   
+Wait for the metric server pod to be up and running and check cluster (nodes) resources:  
+```console
+kubectl top nodes
+
+NAME                                  CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%
+test-operator-cluster-control-plane   221m         2%     697Mi           4%
+test-operator-cluster-worker          31m          0%     230Mi           1%
+test-operator-cluster-worker2         29m          0%     253Mi           1%
+test-operator-cluster-worker3         42m          0%     242Mi           1%
+```  
+
+
+Now apply the following `ConsumeNamespaceResources` manifest:  
+
+```yaml
+apiVersion: khaos.stackzoo.io/v1alpha1
+kind: ConsumeNamespaceResources
+metadata:
+  name: example-consume-resources
+spec:
+  targetNamespace: prod
+  numPods: 200
+
+```  
+
+```console
+kubectl apply -f examples/consume-namespace-resources.yaml  
+```  
+
+Let's inspect the deployment in the `prod` namespace:  
+```console
+kubectl -n prod get deployment
+
+NAME                 READY   UP-TO-DATE   AVAILABLE     AGE
+busybox-deployment   200/200   80           80          44s
+nginx-deployment     10/10     10           10          10m
+```  
+
+Let's now review the nodes usagge:  
+```console
+kubectl top nodes
+
+NAME                                  CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%   
+test-operator-cluster-control-plane   845m         10%    904Mi           5%        
+test-operator-cluster-worker          1790m        22%    938Mi           5%        
+test-operator-cluster-worker2         1494m        18%    1039Mi          6%        
+test-operator-cluster-worker3         1673m        20%    1045Mi          6%
+```  
+
+As we can see, our deployment in the *prod* namespace is consuming resources!  
+Now try deleting the `ConsumeNamespaceResources` object:  
+```console
+kubectl delete -f examples/consume-namespace-resources.yaml
+
+consumenamespaceresources.khaos.stackzoo.io "example-consume-resources" deleted
+```   
+
+Check the operator's logs:  
+
+```console
+2023-11-30T15:45:40+01:00       INFO    Object deleted, finalizing resources    {"controller": "consumenamespaceresources", "controllerGroup": "khaos.stackzoo.io", "controllerKind": "ConsumeNamespaceResources", "ConsumeNamespaceResources": {"name":"example-consume-resources","namespace":"default"}, "namespace": "default", "name": "example-consume-resources", "reconcileID": "b35fdd79-5308-4080-a718-027e2d9d7d13"}
+```  
+
+The resource's controller contains a finalizer and it is deleting our busybox deployment in the *prod* namespace!  
+Check the deployments in the *prod* namespace:  
+```console
+kubectl -n prod get deployment
+
+NAME               READY   UP-TO-DATE   AVAILABLE   AGE
+nginx-deployment   10/10   10           10          21m
+```  
+Cool, our deployment has been successfully deleted.  
 
 
 
-
-
-
-
-
-
+</details>  
 
 
 
@@ -545,7 +630,7 @@ kubectl get events | grep gibberish
 This repo contains a [github action](https://github.com/stackzoo/khaos/blob/main/.github/workflows/release.yaml) that publish  the operator *oci image*  to *github registry* when new releases tag are pushed to the main branch.  
 In order to install the operator as a pod in the cluster you can leverage one of the *make* targets:  
 ```console
-make deploy IMG=ghcr.io/stackzoo/khaos:0.0.7
+make deploy IMG=ghcr.io/stackzoo/khaos:0.0.8
 ```  
 
 This command will install all the required *CRDs* and *RBAC manifests* and then start the operator as a pod:  

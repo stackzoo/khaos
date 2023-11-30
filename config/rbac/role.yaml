@@ -296,3 +296,29 @@ rules:
   - get
   - patch
   - update
+- apiGroups:
+  - stackzoo.io
+  resources:
+  - consumenamespaceresources
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - stackzoo.io
+  resources:
+  - consumenamespaceresources/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - stackzoo.io
+  resources:
+  - consumenamespaceresources/status
+  verbs:
+  - get
+  - patch
+  - update

@@ -1,0 +1,7 @@
+apiVersion: khaos.stackzoo.io/v1alpha1
+kind: ConsumeNamespaceResources
+metadata:
+  name: example-consume-resources
+spec:
+  targetNamespace: prod
+  numPods: 200

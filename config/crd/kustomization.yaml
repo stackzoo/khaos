@@ -11,6 +11,7 @@ resources:
 - bases/khaos.stackzoo.io_configmapdestroyers.yaml
 - bases/khaos.stackzoo.io_apiserveroverloads.yaml
 - bases/khaos.stackzoo.io_eventsentropies.yaml
+- bases/khaos.stackzoo.io_consumenamespaceresources.yaml
 #+kubebuilder:scaffold:crdkustomizeresource
 
 patches:
@@ -25,6 +26,7 @@ patches:
 #- path: patches/webhook_in_configmapdestroyers.yaml
 #- path: patches/webhook_in_apiserveroverloads.yaml
 #- path: patches/webhook_in_eventsentropies.yaml
+#- path: patches/webhook_in_consumenamespaceresources.yaml
 #+kubebuilder:scaffold:crdkustomizewebhookpatch
 
 # [CERTMANAGER] To enable cert-manager, uncomment all the sections with [CERTMANAGER] prefix.
@@ -38,6 +40,7 @@ patches:
 #- path: patches/cainjection_in_configmapdestroyers.yaml
 #- path: patches/cainjection_in_apiserveroverloads.yaml
 #- path: patches/cainjection_in_eventsentropies.yaml
+#- path: patches/cainjection_in_consumenamespaceresources.yaml
 #+kubebuilder:scaffold:crdkustomizecainjectionpatch
 
 # [WEBHOOK] To enable webhook, uncomment the following section
