@@ -73,7 +73,7 @@ rules:
   - update
   - watch
 - apiGroups:
-  - chaos.stackzoo.io
+  - khaos.stackzoo.io
   resources:
   - podlabelchaos
   verbs:
@@ -85,13 +85,13 @@ rules:
   - update
   - watch
 - apiGroups:
-  - chaos.stackzoo.io
+  - khaos.stackzoo.io
   resources:
   - podlabelchaos/finalizers
   verbs:
   - update
 - apiGroups:
-  - chaos.stackzoo.io
+  - khaos.stackzoo.io
   resources:
   - podlabelchaos/status
   verbs:

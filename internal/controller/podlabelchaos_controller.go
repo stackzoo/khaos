@@ -36,9 +36,9 @@ type PodLabelChaosReconciler struct {
 	Scheme *runtime.Scheme
 }
 
-//+kubebuilder:rbac:groups=chaos.stackzoo.io,resources=podlabelchaos,verbs=get;list;watch;create;update;patch;delete
-//+kubebuilder:rbac:groups=chaos.stackzoo.io,resources=podlabelchaos/status,verbs=get;update;patch
-//+kubebuilder:rbac:groups=chaos.stackzoo.io,resources=podlabelchaos/finalizers,verbs=update
+//+kubebuilder:rbac:groups=khaos.stackzoo.io,resources=podlabelchaos,verbs=get;list;watch;create;update;patch;delete
+//+kubebuilder:rbac:groups=khaos.stackzoo.io,resources=podlabelchaos/status,verbs=get;update;patch
+//+kubebuilder:rbac:groups=khaos.stackzoo.io,resources=podlabelchaos/finalizers,verbs=update
 //+kubebuilder:rbac:groups=apps,resources=deployments,verbs=get;list;watch;update
 
 // Reconcile is part of the main Kubernetes reconciliation loop
