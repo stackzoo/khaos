@@ -1,0 +1,9 @@
+apiVersion: khaos.stackzoo.io/v1alpha1
+kind: CordonNode
+metadata:
+  name: example-cordon-node
+spec:
+  nodesToCordon:
+    - test-operator-cluster-worker
+    - test-operator-cluster-worker2
+    - test-operator-cluster-worker3

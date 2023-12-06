@@ -10,4 +10,5 @@ resources:
 - khaos_v1alpha1_apiserveroverload.yaml
 - khaos_v1alpha1_eventsentropy.yaml
 - khaos_v1alpha1_consumenamespaceresources.yaml
+- khaos_v1alpha1_cordonnode.yaml
 #+kubebuilder:scaffold:manifestskustomizesamples

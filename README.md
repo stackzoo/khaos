@@ -21,6 +21,7 @@ Currently, Khaos does not implement *cronjobs*; any scheduling of Khaos Custom R
 - [x] Delete cluster nodes
 - [X] Delete secrets
 - [X] Delete configmaps
+- [X] Cordon nodes
 - [X] Inject resource constraints in pods
 - [X] Add o remove labels in pods
 - [X] Flood api server with calls
@@ -87,17 +88,17 @@ Install and list all the available operator's CRDs with the following command:
 make install && kubectl get crds
 
 NAME                                       CREATED AT
-apiserveroverloads.khaos.stackzoo.io          2023-11-30T12:51:02Z
-commandinjections.khaos.stackzoo.io           2023-11-30T12:51:02Z
-configmapdestroyers.khaos.stackzoo.io         2023-11-30T12:51:02Z
-consumenamespaceresources.khaos.stackzoo.io   2023-11-30T13:58:09Z
-containerresourcechaos.khaos.stackzoo.io      2023-11-30T12:51:02Z
-eventsentropies.khaos.stackzoo.io             2023-11-30T12:51:02Z
-nodedestroyers.khaos.stackzoo.io              2023-11-30T12:51:02Z
-poddestroyers.khaos.stackzoo.io               2023-11-30T12:51:02Z
-podlabelchaos.khaos.stackzoo.io               2023-11-30T12:51:02Z
-secretdestroyers.khaos.stackzoo.io            2023-11-30T12:51:02Z
-serviceaccountremovers.khaos.stackzoo.io      2023-11-30T12:51:02Z
+apiserveroverloads.khaos.stackzoo.io          2023-12-06T13:20:49Z
+commandinjections.khaos.stackzoo.io           2023-12-06T13:20:49Z
+configmapdestroyers.khaos.stackzoo.io         2023-12-06T13:20:49Z
+consumenamespaceresources.khaos.stackzoo.io   2023-12-06T13:20:49Z
+containerresourcechaos.khaos.stackzoo.io      2023-12-06T13:20:49Z
+cordonnodes.khaos.stackzoo.io                 2023-12-06T13:20:49Z
+eventsentropies.khaos.stackzoo.io             2023-12-06T13:20:49Z
+nodedestroyers.khaos.stackzoo.io              2023-12-06T13:20:49Z
+poddestroyers.khaos.stackzoo.io               2023-12-06T13:20:49Z
+podlabelchaos.khaos.stackzoo.io               2023-12-06T13:20:49Z
+secretdestroyers.khaos.stackzoo.io            2023-12-06T13:20:49Z
 ```  
 
 In order to run the operator on your cluster (current context - i.e. whatever cluster `kubectl cluster-info` shows) run:  
@@ -616,11 +617,52 @@ kubectl get events | grep gibberish
 
 
 
+<details>
+  <summary>CORDON NODES</summary>  
+
+Apply the following `CordonNodes` manifest:  
+
+```yaml
+apiVersion: khaos.stackzoo.io/v1alpha1
+kind: CordonNode
+metadata:
+  name: example-cordon-node
+spec:
+  nodesToCordon:
+    - test-operator-cluster-worker
+    - test-operator-cluster-worker2
+    - test-operator-cluster-worker3
+
+```  
+
+```console
+kubectl apply -f examples/cordon-nodes.yaml
+```  
+
+Now check the status of the resource:  
+
+```console
+kubectl describe cordonnodes.khaos.stackzoo.io example-cordon-node | grep "Nodes Cordoned"
+
+Nodes Cordoned:  3
+```   
 
 
+Now run a busybox pod:  
+```console
+kubectl apply -f examples/test-node-cordon-pod.yaml
 
+pod/busybox-pod created
+```   
 
+Let's check that pod:  
+```console
+kubectl -n default describe pod busybox-pod | grep Warning
 
+Warning  FailedScheduling  63s   default-scheduler  0/4 nodes are available: 1 node(s) had untolerated taint {node-role.kubernetes.io/control-plane: }, 3 node(s) were unschedulable. preemption: 0/4 nodes are available: 4 Preemption is not helpful for scheduling..
+```  
+
+</details>  
 
 
 <br/>  

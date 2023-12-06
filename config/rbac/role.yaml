@@ -75,32 +75,6 @@ rules:
 - apiGroups:
   - khaos.stackzoo.io
   resources:
-  - podlabelchaos
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - khaos.stackzoo.io
-  resources:
-  - podlabelchaos/finalizers
-  verbs:
-  - update
-- apiGroups:
-  - khaos.stackzoo.io
-  resources:
-  - podlabelchaos/status
-  verbs:
-  - get
-  - patch
-  - update
-- apiGroups:
-  - khaos.stackzoo.io
-  resources:
   - apiserveroverloads
   verbs:
   - get
@@ -201,6 +175,26 @@ rules:
 - apiGroups:
   - khaos.stackzoo.io
   resources:
+  - cordonnodes
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - cordonnodes/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
   - eventsentropy
   verbs:
   - create
@@ -266,6 +260,32 @@ rules:
   - khaos.stackzoo.io
   resources:
   - poddestroyers/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - podlabelchaos
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - podlabelchaos/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - podlabelchaos/status
   verbs:
   - get
   - patch
