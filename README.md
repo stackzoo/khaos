@@ -672,7 +672,7 @@ Warning  FailedScheduling  63s   default-scheduler  0/4 nodes are available: 1 n
 This repo contains a [github action](https://github.com/stackzoo/khaos/blob/main/.github/workflows/release.yaml) that publish  the operator *oci image*  to *github registry* when new releases tag are pushed to the main branch.  
 In order to install the operator as a pod in the cluster you can leverage one of the *make* targets:  
 ```console
-make deploy IMG=ghcr.io/stackzoo/khaos:0.0.8
+make deploy IMG=ghcr.io/stackzoo/khaos:0.0.9
 ```  
 
 This command will install all the required *CRDs* and *RBAC manifests* and then start the operator as a pod:  
