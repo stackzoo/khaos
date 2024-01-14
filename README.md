@@ -8,7 +8,7 @@
 A lightweight kubernetes operator to test cluster and application resilience via chaos engineering 💣 ☸️  
 
 ## Abstract
-**Khaos** is a straightforward Kubernetes [operator](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/) made with [kubebuilder](https://github.com/kubernetes-sigs/kubebuilder) and designed for executing [Chaos Engineering](https://en.wikipedia.org/wiki/Chaos_engineering) activities.  
+**Khaos** (pun intended) is a straightforward Kubernetes [operator](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/) made with [kubebuilder](https://github.com/kubernetes-sigs/kubebuilder) and designed for executing [Chaos Engineering](https://en.wikipedia.org/wiki/Chaos_engineering) activities.  
 Through the implementation of custom controllers and resources, Khaos facilitates the configuration and automation of operations such as the targeted deletion of pods within a specified namespace, the removal of nodes from the cluster, the deletion of secrets and more.  
 Khaos is an **unopinionated** operator, in the sense that it provides simple and *atomic primitives* that engineers can use as building blocks in order to compose their preferred chaos strategy.  
 Currently, Khaos does not implement *cronjobs*; any scheduling of Khaos Custom Resources is delegated to external logic outside the cluster, possibly through a GitOps approach.  
