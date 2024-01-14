@@ -1,4 +1,4 @@
-module stackzoo.io/khaos
+module stackzoo/khaos
 
 go 1.20
 
