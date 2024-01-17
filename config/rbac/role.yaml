@@ -35,6 +35,7 @@ rules:
   - delete
   - get
   - list
+  - update
   - watch
 - apiGroups:
   - ""
@@ -234,6 +235,32 @@ rules:
   - khaos.stackzoo.io
   resources:
   - nodedestroyers/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - nodetainters
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - nodetainters/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - nodetainters/status
   verbs:
   - get
   - patch

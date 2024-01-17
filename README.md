@@ -10,11 +10,11 @@ A lightweight kubernetes operator to test cluster and application resilience via
 ## Abstract
 **Khaos** (pun intended) is a straightforward Kubernetes [operator](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/) made with [kubebuilder](https://github.com/kubernetes-sigs/kubebuilder) and designed for executing [Chaos Engineering](https://en.wikipedia.org/wiki/Chaos_engineering) activities.  
 Through the implementation of custom controllers and resources, Khaos facilitates the configuration and automation of operations such as the targeted deletion of pods within a specified namespace, the removal of nodes from the cluster, the deletion of secrets and more.  
-Khaos is an **unopinionated** operator, in the sense that it provides simple and *atomic primitives* that engineers can use as building blocks in order to compose their preferred chaos strategy.  
-Currently, Khaos does not implement *cronjobs*; any scheduling of Khaos Custom Resources is delegated to external logic outside the cluster, possibly through a GitOps approach.  
+Khaos is an **unopinionated** operator, meaning that it only provides simple and *atomic primitives* that engineers can use as building blocks in order to compose their preferred chaos strategy.  
+Currently, Khaos does not implement *cronjobs*; any scheduling of Khaos Custom Resources is delegated to external logic outside the cluster, possibly through a *GitOps* approach.  
 
 > [!WARNING]  
-> This operator will introduce faults and unpredicatbility in your infrastructure, use with caution  
+> This operator will introduce faults and unpredicatbility in your infrastructure, use with caution.  
 
 ## Supported features
 - [X] Delete pods
@@ -22,6 +22,7 @@ Currently, Khaos does not implement *cronjobs*; any scheduling of Khaos Custom R
 - [X] Delete secrets
 - [X] Delete configmaps
 - [X] Cordon nodes
+- [X] Taint nodes
 - [X] Inject resource constraints in pods
 - [X] Add o remove labels in pods
 - [X] Flood api server with calls
@@ -85,20 +86,21 @@ make cluster-up
 
 Install and list all the available operator's CRDs with the following command:  
 ```console
-make install && kubectl get crds
+make manifests && make install && kubectl get crds
 
 NAME                                       CREATED AT
-apiserveroverloads.khaos.stackzoo.io          2023-12-06T13:20:49Z
-commandinjections.khaos.stackzoo.io           2023-12-06T13:20:49Z
-configmapdestroyers.khaos.stackzoo.io         2023-12-06T13:20:49Z
-consumenamespaceresources.khaos.stackzoo.io   2023-12-06T13:20:49Z
-containerresourcechaos.khaos.stackzoo.io      2023-12-06T13:20:49Z
-cordonnodes.khaos.stackzoo.io                 2023-12-06T13:20:49Z
-eventsentropies.khaos.stackzoo.io             2023-12-06T13:20:49Z
-nodedestroyers.khaos.stackzoo.io              2023-12-06T13:20:49Z
-poddestroyers.khaos.stackzoo.io               2023-12-06T13:20:49Z
-podlabelchaos.khaos.stackzoo.io               2023-12-06T13:20:49Z
-secretdestroyers.khaos.stackzoo.io            2023-12-06T13:20:49Z
+apiserveroverloads.khaos.stackzoo.io          2024-01-17T07:35:17Z
+commandinjections.khaos.stackzoo.io           2024-01-17T07:35:17Z
+configmapdestroyers.khaos.stackzoo.io         2024-01-17T07:35:17Z
+consumenamespaceresources.khaos.stackzoo.io   2024-01-17T07:35:17Z
+containerresourcechaos.khaos.stackzoo.io      2024-01-17T07:35:17Z
+cordonnodes.khaos.stackzoo.io                 2024-01-17T07:35:17Z
+eventsentropies.khaos.stackzoo.io             2024-01-17T07:35:17Z
+nodedestroyers.khaos.stackzoo.io              2024-01-17T07:35:17Z
+nodetainters.khaos.stackzoo.io                2024-01-17T07:35:17Z
+poddestroyers.khaos.stackzoo.io               2024-01-17T07:35:17Z
+podlabelchaos.khaos.stackzoo.io               2024-01-17T07:35:17Z
+secretdestroyers.khaos.stackzoo.io            2024-01-17T07:35:17Z
 ```  
 
 In order to run the operator on your cluster (current context - i.e. whatever cluster `kubectl cluster-info` shows) run:  
@@ -285,6 +287,71 @@ As you can see the operator succesfully removed the specified nodes.
 
 
 </details>  
+
+<details>
+  <summary>TAINT NODES</summary>
+
+First, retrieve nodes info from your cluster:  
+```console
+kubectl get nodes
+
+NAME                                  STATUS   ROLES           AGE   VERSION
+test-operator-cluster-control-plane   Ready    control-plane   2m37s   v1.27.3
+test-operator-cluster-worker          Ready    <none>          2m15s   v1.27.3
+test-operator-cluster-worker2         Ready    <none>          2m16s   v1.27.3
+test-operator-cluster-worker3         Ready    <none>          2m17s   v1.27.3
+
+```  
+
+Retrieve the annotations for the test-operator-cluster-worker3 node:  
+```json
+kubectl get node test-operator-cluster-worker3 -o=jsonpath='{.spec.taints}' | jq
+```  
+The previous command should return nothing as our node has no taints.  
+
+
+Now apply the following `NodeTainter` manifest:  
+
+```yaml
+apiVersion: khaos.stackzoo.io/v1alpha1
+kind: NodeTainter
+metadata:
+  name: example-node-tainter
+spec:
+  nodeNames:
+    - test-operator-cluster-worker
+    - test-operator-cluster-worker3
+```
+
+```console
+kubectl apply -f examples/node-tainter.yaml
+```  
+Check the operator's logs:  
+```console
+2024-01-17T08:54:47+01:00	INFO	Reconciling NodeTainter: default/example-node-tainter	{"controller": "nodetainter", "controllerGroup": "khaos.stackzoo.io", "controllerKind": "NodeTainter", "NodeTainter": {"name":"example-node-tainter","namespace":"default"}, "namespace": "default", "name": "example-node-tainter", "reconcileID": "1c270341-0b1d-4675-8188-38e82f3ccc9e"}
+2024-01-17T08:54:47+01:00	INFO	Node Names: [test-operator-cluster-worker test-operator-cluster-worker3]	{"controller": "nodetainter", "controllerGroup": "khaos.stackzoo.io", "controllerKind": "NodeTainter", "NodeTainter": {"name":"example-node-tainter","namespace":"default"}, "namespace": "default", "name": "example-node-tainter", "reconcileID": "1c270341-0b1d-4675-8188-38e82f3ccc9e"}
+```  
+
+
+Now, once again, retrieve the tain on the node:  
+```json
+kubectl get node test-operator-cluster-worker3 -o=jsonpath='{.spec.taints}' | jq
+
+[
+  {
+    "effect": "NoSchedule",
+    "key": "khaos.io/tainted",
+    "value": "true"
+  }
+]
+
+```  
+
+As you can see the operator succesfully tainted the specified nodes.  
+
+
+</details>  
+
 
 
 
@@ -694,4 +761,9 @@ khaos-controller-manager-8887957bf-5b8g9   1/1     Running               0      
 - [kubuilder docs](https://book.kubebuilder.io/)
 - [programming kubernetes book](https://www.oreilly.com/library/view/programming-kubernetes/9781492047094/)
 - [kubernetes programming with go book](https://link.springer.com/book/10.1007/978-1-4842-9026-2)
-- [chaos engineering book](https://www.oreilly.com/library/view/chaos-engineering/9781492043850/)
+- [chaos engineering book](https://www.oreilly.com/library/view/chaos-engineering/9781492043850/)  
+
+
+## License
+
+This operator is released under the [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0).  
