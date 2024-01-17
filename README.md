@@ -3,7 +3,7 @@
 
 
 <br/>
-<img src="docs/images/klogo.png" alt="logo" width="230" height="230">  
+<img src="docs/images/logo3.png" alt="logo" width="210" height="210">  
 <br/>
 A lightweight kubernetes operator to test cluster and application resilience via chaos engineering 💣 ☸️  
 
