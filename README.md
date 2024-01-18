@@ -3,9 +3,8 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)  [![Latest Release](https://img.shields.io/github/v/release/stackzoo/khaos?logo=github)](https://github.com/stackzoo/khaos/releases/latest)  [![Go version](https://img.shields.io/github/go-mod/go-version/stackzoo/khaos.svg)](https://github.com/stackzoo/khaos)
 
 
-<br/>
 <img src="docs/images/logo4.png" alt="logo" width="210" height="210">  
-<br/>
+
 A lightweight kubernetes operator to test cluster and application resilience via chaos engineering 💣 ☸️  
 
 ## Abstract
