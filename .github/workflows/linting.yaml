@@ -2,9 +2,16 @@ name: linting
 on:
   push:
     branches:
-      - master
       - main
+    paths:
+      - '**/*'
+      - '!README.md'
+      - '!docs/**'
   pull_request:
+    paths:
+      - '**/*'
+      - '!README.md'
+      - '!docs/**'
 
 permissions:
   contents: read
