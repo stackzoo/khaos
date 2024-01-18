@@ -53,7 +53,10 @@ func (r *EventsEntropyReconciler) createRandomEvents(eventsEntropy *khaosv1alpha
 		}
 
 		// Set the reference to the EventsEntropy
-		controllerutil.SetControllerReference(eventsEntropy, event, r.Scheme)
+		if err := controllerutil.SetControllerReference(eventsEntropy, event, r.Scheme); err != nil {
+			r.Log.Error(err, "Failed to set controller reference for event")
+			return
+		}
 
 		// Create the event
 		if err := r.Create(context.Background(), event); err != nil {

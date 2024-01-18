@@ -36,9 +36,9 @@ func (r *CordonNodeReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 	}
 
 	// Process the CordonNode and cordon nodes
-	nodesCordoned, err := r.cordonNodes(cordonNode)
-	if err != nil {
-		return reconcile.Result{}, err
+	nodesCordoned := r.cordonNodes(cordonNode)
+	if nodesCordoned == 0 {
+		return reconcile.Result{}, nil
 	}
 
 	// Update the status
@@ -50,7 +50,7 @@ func (r *CordonNodeReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 	return reconcile.Result{}, nil
 }
 
-func (r *CordonNodeReconciler) cordonNodes(cordonNode *khaosv1alpha1.CordonNode) (int, error) {
+func (r *CordonNodeReconciler) cordonNodes(cordonNode *khaosv1alpha1.CordonNode) int {
 	nodesCordoned := 0
 
 	for _, nodeName := range cordonNode.Spec.NodesToCordon {
@@ -71,7 +71,7 @@ func (r *CordonNodeReconciler) cordonNodes(cordonNode *khaosv1alpha1.CordonNode)
 		nodesCordoned++
 	}
 
-	return nodesCordoned, nil
+	return nodesCordoned
 }
 
 func (r *CordonNodeReconciler) SetupWithManager(mgr ctrl.Manager) error {
