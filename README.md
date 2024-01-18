@@ -1,5 +1,6 @@
 # KHAOS
-[![releaser](https://github.com/stackzoo/khaos/actions/workflows/release.yaml/badge.svg)](https://github.com/stackzoo/khaos/actions/workflows/release.yaml)  [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)  [![Latest Release](https://img.shields.io/github/v/release/stackzoo/khaos?logo=github)](https://github.com/stackzoo/khaos/releases/latest)  ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/stackzoo/khaos/main)
+[![linting](https://github.com/stackzoo/khaos/actions/workflows/linting.yaml/badge.svg)](https://github.com/stackzoo/khaos/actions/workflows/linting.yaml)  [![releaser](https://github.com/stackzoo/khaos/actions/workflows/release.yaml/badge.svg)](https://github.com/stackzoo/khaos/actions/workflows/release.yaml)  ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/stackzoo/khaos/main)  
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)  [![Latest Release](https://img.shields.io/github/v/release/stackzoo/khaos?logo=github)](https://github.com/stackzoo/khaos/releases/latest)  
 
 
 <br/>
