@@ -304,7 +304,7 @@ test-operator-cluster-worker3         Ready    <none>          2m17s   v1.27.3
 ```  
 
 Retrieve the annotations for the test-operator-cluster-worker3 node:  
-```json
+```console
 kubectl get node test-operator-cluster-worker3 -o=jsonpath='{.spec.taints}' | jq
 ```  
 The previous command should return nothing as our node has no taints.  
