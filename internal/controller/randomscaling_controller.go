@@ -51,7 +51,7 @@ func (r *RandomScalingReconciler) Reconcile(ctx context.Context, req ctrl.Reques
 	log.Info(fmt.Sprintf("Starting reconcile for random scaling - deployment %s", randomScaling.Spec.Deployment))
 	log.Info(fmt.Sprintf("RandomReplicas %v", randomReplicas))
 
-	// Fetch the latest version of the deployment (in order to avoid race conditions)
+	// Fetch the latest version of the deployment (in order to avoid race conditions, another way is to disable cache, see https://github.com/kubernetes-sigs/kubebuilder/issues/1112)
 	if err := r.Get(ctx, client.ObjectKey{Namespace: req.Namespace, Name: randomScaling.Spec.Deployment}, deployment); err != nil {
 		log.Error(err, "Unable to fetch Deployment (retry)", "deployment", randomScaling.Spec.Deployment)
 		randomScaling.Status.OperationResult = false
