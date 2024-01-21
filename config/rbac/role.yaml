@@ -74,6 +74,26 @@ rules:
   - update
   - watch
 - apiGroups:
+  - khaos.my.domain
+  resources:
+  - randomscalings
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - khaos.my.domain
+  resources:
+  - randomscalings/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
   - khaos.stackzoo.io
   resources:
   - apiserveroverloads

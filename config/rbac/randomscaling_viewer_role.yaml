@@ -1,0 +1,27 @@
+# permissions for end users to view randomscalings.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: randomscaling-viewer-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: khaos
+    app.kubernetes.io/part-of: khaos
+    app.kubernetes.io/managed-by: kustomize
+  name: randomscaling-viewer-role
+rules:
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - randomscalings
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - randomscalings/status
+  verbs:
+  - get

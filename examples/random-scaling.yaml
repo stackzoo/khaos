@@ -1,0 +1,8 @@
+apiVersion: khaos.stackzoo.io/v1alpha1
+kind: RandomScaling
+metadata:
+  name: example-randomscaling
+spec:
+  deployment: random-scaling-deployment
+  minReplicas: 1
+  maxReplicas: 10

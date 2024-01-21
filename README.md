@@ -18,6 +18,7 @@ Currently, Khaos does not implement *cronjobs*; any scheduling of Khaos Custom R
 
 ## Supported features
 - [X] Delete pods
+- [X] Random scaling pod replicas
 - [x] Delete cluster nodes
 - [X] Delete secrets
 - [X] Delete configmaps
@@ -89,18 +90,19 @@ Install and list all the available operator's CRDs with the following command:
 make manifests && make install && kubectl get crds
 
 NAME                                       CREATED AT
-apiserveroverloads.khaos.stackzoo.io          2024-01-17T07:35:17Z
-commandinjections.khaos.stackzoo.io           2024-01-17T07:35:17Z
-configmapdestroyers.khaos.stackzoo.io         2024-01-17T07:35:17Z
-consumenamespaceresources.khaos.stackzoo.io   2024-01-17T07:35:17Z
-containerresourcechaos.khaos.stackzoo.io      2024-01-17T07:35:17Z
-cordonnodes.khaos.stackzoo.io                 2024-01-17T07:35:17Z
-eventsentropies.khaos.stackzoo.io             2024-01-17T07:35:17Z
-nodedestroyers.khaos.stackzoo.io              2024-01-17T07:35:17Z
-nodetainters.khaos.stackzoo.io                2024-01-17T07:35:17Z
-poddestroyers.khaos.stackzoo.io               2024-01-17T07:35:17Z
-podlabelchaos.khaos.stackzoo.io               2024-01-17T07:35:17Z
-secretdestroyers.khaos.stackzoo.io            2024-01-17T07:35:17Z
+apiserveroverloads.khaos.stackzoo.io          2024-01-21T15:29:36Z
+commandinjections.khaos.stackzoo.io           2024-01-21T15:29:36Z
+configmapdestroyers.khaos.stackzoo.io         2024-01-21T15:29:36Z
+consumenamespaceresources.khaos.stackzoo.io   2024-01-21T15:29:36Z
+containerresourcechaos.khaos.stackzoo.io      2024-01-21T15:29:36Z
+cordonnodes.khaos.stackzoo.io                 2024-01-21T15:29:36Z
+eventsentropies.khaos.stackzoo.io             2024-01-21T15:29:36Z
+nodedestroyers.khaos.stackzoo.io              2024-01-21T15:29:36Z
+nodetainters.khaos.stackzoo.io                2024-01-21T15:29:36Z
+poddestroyers.khaos.stackzoo.io               2024-01-21T15:29:36Z
+podlabelchaos.khaos.stackzoo.io               2024-01-21T15:29:36Z
+randomscalings.khaos.stackzoo.io              2024-01-21T15:29:36Z
+secretdestroyers.khaos.stackzoo.io            2024-01-21T15:29:36Z
 ```  
 
 In order to run the operator on your cluster (current context - i.e. whatever cluster `kubectl cluster-info` shows) run:  
@@ -191,7 +193,7 @@ nginx-deployment-7bf8c77b5b-gsprh   0/1     Terminating         0          33s
 nginx-deployment-7bf8c77b5b-gsprh   0/1     Terminating         0          33s
 nginx-deployment-7bf8c77b5b-gsprh   0/1     Terminating         0          33s
 ```  
-1. Our operator shows the reconciliation logic's logs:  
+2. Our operator shows the reconciliation logic's logs:  
 ```console   
 2023-11-28T14:07:18+01:00       INFO    Reconciling PodDestroyer: default/nginx-destroyer       {"controller": "poddestroyer", "controllerGroup": "khaos.stackzoo.io", "controllerKind": "PodDestroyer", "PodDestroyer": {"name":"nginx-destroyer","namespace":"default"}, "namespace": "default", "name": "nginx-destroyer", "reconcileID": "1e16a7d2-825a-4b46-b4e5-ac1228bc1c36"}
 2023-11-28T14:07:18+01:00       INFO    Selector: {map[app:nginx] []}   {"controller": "poddestroyer", "controllerGroup": "khaos.stackzoo.io", "controllerKind": "PodDestroyer", "PodDestroyer": {"name":"nginx-destroyer","namespace":"default"}, "namespace": "default", "name": "nginx-destroyer", "reconcileID": "1e16a7d2-825a-4b46-b4e5-ac1228bc1c36"}
@@ -238,6 +240,104 @@ The `status` spec tells you how many pods have been successfully destroyed.
 
 
 </details>  
+
+
+
+<details>
+  <summary>RANDOM SCALING POD REPLICAS</summary>
+
+
+Apply an example deployment:  
+
+
+```console
+kubectl apply -f examples/random-scaling-test-deployment.yaml
+```  
+
+Retrieve our deployment's pods in the default namespace:  
+```console
+kubectl get pods
+
+NAME                                         READY   STATUS    RESTARTS   AGE
+random-scaling-deployment-56c5d5bb74-pcgm6   1/1     Running   0          52s
+random-scaling-deployment-56c5d5bb74-rw4sp   1/1     Running   0          52s
+random-scaling-deployment-56c5d5bb74-tpvxb   1/1     Running   0          52s
+```  
+
+Now apply the following `RandomScaling` manifest:  
+
+```yaml
+apiVersion: khaos.stackzoo.io/v1alpha1
+kind: RandomScaling
+metadata:
+  name: example-randomscaling-2
+spec:
+  deployment: random-scaling-deployment
+  minReplicas: 2
+  maxReplicas: 13
+```   
+
+```console
+kubectl apply -f examples/random-scaling.yaml
+```   
+
+This will scale our deployment by randomly picking a number between `minReplicas` and `maxReplicas`.  
+
+
+Check again our pods:  
+```console
+kubectl get pods
+
+NAME                                         READY   STATUS    RESTARTS   AGE
+random-scaling-deployment-56c5d5bb74-2tcss   1/1     Running   0          2m49s
+random-scaling-deployment-56c5d5bb74-8c5gf   1/1     Running   0          2m49s
+random-scaling-deployment-56c5d5bb74-bjpkc   1/1     Running   0          2m49s
+random-scaling-deployment-56c5d5bb74-cctcz   1/1     Running   0          2m49s
+random-scaling-deployment-56c5d5bb74-pcgm6   1/1     Running   0          5m44s
+random-scaling-deployment-56c5d5bb74-rw4sp   1/1     Running   0          5m44s
+random-scaling-deployment-56c5d5bb74-tpvxb   1/1     Running   0          5m44s
+```  
+
+You can notice that there are 4 more pods!  
+
+Our operator shows the reconciliation logic's logs:  
+```console   
+2024-01-21T17:47:32+01:00       INFO    Starting reconcile for random scaling - deployment random-scaling-deployment    {"controller": "randomscaling", "controllerGroup": "khaos.stackzoo.io", "controllerKind": "RandomScaling", "RandomScaling": {"name":"example-randomscaling","namespace":"default"}, "namespace": "default", "name": "example-randomscaling", "reconcileID": "4cda6061-a893-470a-8a43-1a222256d987"}
+2024-01-21T17:47:32+01:00       INFO    RandomReplicas 7       {"controller": "randomscaling", "controllerGroup": "khaos.stackzoo.io", "controllerKind": "RandomScaling", "RandomScaling": {"name":"example-randomscaling","namespace":"default"}, "namespace": "default", "name": "example-randomscaling", "reconcileID": "4cda6061-a893-470a-8a43-1a222256d987"}
+```  
+
+Now we can inspect the status of our PodDestroyer object:  
+```console 
+kubectl get randomscaling example-randomscaling -o yaml
+```  
+
+This will retrieve our resource in `yaml` format:  
+```yaml
+apiVersion: khaos.stackzoo.io/v1alpha1
+kind: RandomScaling
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"khaos.stackzoo.io/v1alpha1","kind":"RandomScaling","metadata":{"annotations":{},"name":"example-randomscaling","namespace":"default"},"spec":{"deployment":"random-scaling-deployment","maxReplicas":10,"minReplicas":1}}
+  creationTimestamp: "2024-01-21T16:46:54Z"
+  generation: 5
+  name: example-randomscaling
+  namespace: default
+  resourceVersion: "1865"
+  uid: 4197f351-4557-4033-b996-fd5f0a8e25fc
+spec:
+  deployment: random-scaling-deployment
+  maxReplicas: 10
+  minReplicas: 1
+status:
+  operationResult: true
+```  
+
+The `status` spec tells you that the last trigger has been succesfully completed.  
+
+
+</details>  
+
 
 
 
