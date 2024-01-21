@@ -270,7 +270,7 @@ Now apply the following `RandomScaling` manifest:
 apiVersion: khaos.stackzoo.io/v1alpha1
 kind: RandomScaling
 metadata:
-  name: example-randomscaling-2
+  name: example-randomscaling
 spec:
   deployment: random-scaling-deployment
   minReplicas: 2
