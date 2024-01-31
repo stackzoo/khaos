@@ -5,10 +5,8 @@ on:
     tags:
       - 'v*.*.*'
 
-permissions:
-  contents: write
-  # packages: write
-  # issues: write
+permissions: 
+  contents: read
 
 jobs:
   releaser:
@@ -22,7 +20,9 @@ jobs:
 
   build-and-publish-oci:
     runs-on: ubuntu-latest
-    permissions: write-all
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - name: Checkout Repository
