@@ -13,7 +13,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/predicate"
 
-	khaosv1alpha1 "stackzoo.io/khaos/api/v1alpha1"
+	khaosv1alpha1 "github.com/stackzoo/khaos/api/v1alpha1"
 )
 
 // RandomScalingReconciler reconciles a RandomScaling object

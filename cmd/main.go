@@ -32,8 +32,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 	metricsserver "sigs.k8s.io/controller-runtime/pkg/metrics/server"
 
-	khaosv1alpha1 "stackzoo.io/khaos/api/v1alpha1"
-	"stackzoo.io/khaos/internal/controller"
+	khaosv1alpha1 "github.com/stackzoo/khaos/api/v1alpha1"
+	"github.com/stackzoo/khaos/internal/controller"
 	//+kubebuilder:scaffold:imports
 )
 

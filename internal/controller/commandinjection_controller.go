@@ -13,7 +13,7 @@ import (
 
 	corev1 "k8s.io/api/core/v1"
 
-	khaosv1alpha1 "stackzoo.io/khaos/api/v1alpha1"
+	khaosv1alpha1 "github.com/stackzoo/khaos/api/v1alpha1"
 )
 
 // CommandInjectionReconciler reconciles a CommandInjection object

@@ -3,6 +3,7 @@ package controller
 import (
 	"context"
 
+	khaosv1alpha1 "github.com/stackzoo/khaos/api/v1alpha1"
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
@@ -13,7 +14,6 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
-	khaosv1alpha1 "stackzoo.io/khaos/api/v1alpha1"
 )
 
 // ConsumeNamespaceResourcesReconciler reconciles a ConsumeNamespaceResources object

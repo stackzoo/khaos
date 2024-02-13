@@ -6,7 +6,7 @@ domain: stackzoo.io
 layout:
 - go.kubebuilder.io/v4
 projectName: khaos
-repo: stackzoo.io/khaos
+repo: github.com/stackzoo/khaos
 resources:
 - api:
     crdVersion: v1
@@ -15,7 +15,7 @@ resources:
   domain: stackzoo.io
   group: khaos
   kind: PodDestroyer
-  path: stackzoo.io/khaos/api/v1alpha1
+  path: github.com/stackzoo/khaos/api/v1alpha1
   version: v1alpha1
 - api:
     crdVersion: v1
@@ -24,7 +24,7 @@ resources:
   domain: stackzoo.io
   group: khaos
   kind: NodeDestroyer
-  path: stackzoo.io/khaos/api/v1alpha1
+  path: github.com/stackzoo/khaos/api/v1alpha1
   version: v1alpha1
 - api:
     crdVersion: v1
@@ -33,7 +33,7 @@ resources:
   domain: stackzoo.io
   group: khaos
   kind: SecretDestroyer
-  path: stackzoo.io/khaos/api/v1alpha1
+  path: github.com/stackzoo/khaos/api/v1alpha1
   version: v1alpha1
 - api:
     crdVersion: v1
@@ -42,7 +42,7 @@ resources:
   domain: stackzoo.io
   group: khaos
   kind: ContainerResourceChaos
-  path: stackzoo.io/khaos/api/v1alpha1
+  path: github.com/stackzoo/khaos/api/v1alpha1
   version: v1alpha1
 - api:
     crdVersion: v1
@@ -51,7 +51,7 @@ resources:
   domain: stackzoo.io
   group: khaos
   kind: CommandInjection
-  path: stackzoo.io/khaos/api/v1alpha1
+  path: github.com/stackzoo/khaos/api/v1alpha1
   version: v1alpha1
 - api:
     crdVersion: v1
@@ -60,7 +60,7 @@ resources:
   domain: stackzoo.io
   group: khaos
   kind: PodLabelChaos
-  path: stackzoo.io/khaos/api/v1alpha1
+  path: github.com/stackzoo/khaos/api/v1alpha1
   version: v1alpha1
 - api:
     crdVersion: v1
@@ -69,7 +69,7 @@ resources:
   domain: stackzoo.io
   group: khaos
   kind: ConfigMapDestroyer
-  path: stackzoo.io/khaos/api/v1alpha1
+  path: github.com/stackzoo/khaos/api/v1alpha1
   version: v1alpha1
 - api:
     crdVersion: v1
@@ -78,7 +78,7 @@ resources:
   domain: stackzoo.io
   group: khaos
   kind: ApiServerOverload
-  path: stackzoo.io/khaos/api/v1alpha1
+  path: github.com/stackzoo/khaos/api/v1alpha1
   version: v1alpha1
 - api:
     crdVersion: v1
@@ -87,7 +87,7 @@ resources:
   domain: stackzoo.io
   group: khaos
   kind: EventsEntropy
-  path: stackzoo.io/khaos/api/v1alpha1
+  path: github.com/stackzoo/khaos/api/v1alpha1
   version: v1alpha1
 - api:
     crdVersion: v1
@@ -96,7 +96,7 @@ resources:
   domain: stackzoo.io
   group: khaos
   kind: ConsumeNamespaceResources
-  path: stackzoo.io/khaos/api/v1alpha1
+  path: github.com/stackzoo/khaos/api/v1alpha1
   version: v1alpha1
 - api:
     crdVersion: v1
@@ -105,7 +105,7 @@ resources:
   domain: stackzoo.io
   group: khaos
   kind: CordonNode
-  path: stackzoo.io/khaos/api/v1alpha1
+  path: github.com/stackzoo/khaos/api/v1alpha1
   version: v1alpha1
 - api:
     crdVersion: v1
@@ -114,7 +114,7 @@ resources:
   domain: stackzoo.io
   group: khaos
   kind: NodeTainter
-  path: stackzoo.io/khaos/api/v1alpha1
+  path: github.com/stackzoo/khaos/api/v1alpha1
   version: v1alpha1
 - api:
     crdVersion: v1
@@ -123,6 +123,6 @@ resources:
   domain: stackzoo.io
   group: khaos
   kind: RandomScaling
-  path: stackzoo.io/khaos/api/v1alpha1
+  path: github.com/stackzoo/khaos/api/v1alpha1
   version: v1alpha1
 version: "3"
