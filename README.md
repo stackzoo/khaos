@@ -840,7 +840,7 @@ Warning  FailedScheduling  63s   default-scheduler  0/4 nodes are available: 1 n
 This repo contains a [github action](https://github.com/stackzoo/khaos/blob/main/.github/workflows/release.yaml) to publish  the operator *oci image*  to *github registry* when new release tags are pushed to the main branch.  
 In order to install the operator as a pod in the cluster you can leverage one of the *make* targets:  
 ```console
-make deploy IMG=ghcr.io/stackzoo/khaos:0.0.15
+make deploy IMG=ghcr.io/stackzoo/khaos:0.0.19
 ```  
 
 This command will install all the required *CRDs* and *RBAC manifests* and then start the operator as a pod:  
@@ -854,6 +854,24 @@ khaos-controller-manager-8887957bf-5b8g9   2/2     Running               0      
 > [!NOTE]  
 > If you encounter RBAC errors, you may need to grant yourself cluster-admin privileges or be logged in as admin.  
   
+
+## Operator Image Signature Verification
+The `realease` pipeline sign the operator's OCI image with cosign.  
+In order to verify the signature, use the following command:  
+```console
+cosign verify --key cosign/cosign.pub ghcr.io/stackzoo/khaos:0.0.19
+```  
+Verification output:  
+```console
+
+Verification for ghcr.io/stackzoo/khaos:0.0.19 --
+The following checks were performed on each of these signatures:
+  - The cosign claims were validated
+  - Existence of the claims in the transparency log was verified offline
+  - The signatures were verified against the specified public key
+
+[{"critical":{"identity":{"docker-reference":"ghcr.io/stackzoo/khaos"},"image":{"docker-manifest-digest":"sha256:3b6d72f646820225943d401a6bea795925e0714d75d6c5c5b7e0de0a3c9178b2"},"type":"cosign container image signature"},"optional":{"Bundle":{"SignedEntryTimestamp":"MEUCIQCLufLLbhbHa+rawlztjHOP7goS30ekP25Q4wtmflob/gIgMGBIVWMeSMgJEfBbPXPd+YV4Ep17RAWkqza6qJXugDY=","Payload":{"body":"eyJhcGlWZXJzaW9uIjoiMC4wLjEiLCJraW5kIjoiaGFzaGVkcmVrb3JkIiwic3BlYyI6eyJkYXRhIjp7Imhhc2giOnsiYWxnb3JpdGhtIjoic2hhMjU2IiwidmFsdWUiOiIxMDMyOTI2MTRmNmRlZTRkZTdlZDUzM2ZjMmZmZGU2MGY3OTI5OTM5YTFmZTE1ODg5Mzk3NTcxZmQ3NmFlYjEwIn19LCJzaWduYXR1cmUiOnsiY29udGVudCI6Ik1FVUNJUUM2OWZNSWw5MFVBSFJoRXdDMi9lYXJ5TkMwYTlvc3IwSkN1c2o3K2M5ejV3SWdKZEJUdGhPWVdVQm44aTBHWW9zN2d0UlJiQXgvbElXd081dkMyMGdkQzNNPSIsInB1YmxpY0tleSI6eyJjb250ZW50IjoiTFMwdExTMUNSVWRKVGlCUVZVSk1TVU1nUzBWWkxTMHRMUzBLVFVacmQwVjNXVWhMYjFwSmVtb3dRMEZSV1VsTGIxcEplbW93UkVGUlkwUlJaMEZGWldaRUsxaFlUbkp3WVVWc1NIaEdVbXBvVEhoSGVFZEJReTg0Y1FwblUwOU5TRE13VEVoeGVXbFdVVlZQTUZOcFQzQnFWSFpKUmtOT2JXWnJlamRhVDNSWlIwbDVPVzkwU0doeWVtOHpNbmw1V1ZBemF6Sm5QVDBLTFMwdExTMUZUa1FnVUZWQ1RFbERJRXRGV1MwdExTMHRDZz09In19fX0=","integratedTime":1707833345,"logIndex":71110514,"logID":"c0d23d6ad406973f9559f3ba2d1ca01f84147d8ffc5b8445c224f98b9591801d"}}}}]
+```  
 
 
 
