@@ -856,7 +856,7 @@ khaos-controller-manager-8887957bf-5b8g9   2/2     Running               0      
   
 
 ## Operator Image Signature Verification
-The `realease` pipeline sign the operator's OCI image with cosign.  
+The `realease` pipeline sign the operator's *OCI image* with [cosign](https://docs.sigstore.dev/signing/quickstart/).  
 In order to verify the signature, use the following command:  
 ```console
 cosign verify --key cosign/cosign.pub ghcr.io/stackzoo/khaos:0.0.19
