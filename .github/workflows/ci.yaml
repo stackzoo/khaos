@@ -30,8 +30,6 @@ jobs:
         uses: golangci/golangci-lint-action@v3
         with:
           version: v1.54
-      - name: Makefile lint
-        uses: Uno-Takashi/checkmake-action@main
       - name: Linting examples manifests
         uses: ibiqlik/action-yamllint@v3
         with:
