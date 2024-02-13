@@ -66,7 +66,7 @@ jobs:
         uses: anchore/sbom-action@v0
         with:
           image: ghcr.io/${{ steps.lowercase.outputs.name }}:${{ steps.tagger.outputs.version-without-v }}
-          artifact-name: ${{ steps.lowercase.outputs.name }}.spdx.json
+          artifact-name: sbom.spdx.json
 
       - name: Sign image with Cosign
         run: |
@@ -78,7 +78,7 @@ jobs:
       - name: Attest the Image with SBOM
         run: |
           ls -lah /tmp
-          SBOM_FILE=$(find /tmp/sbom-action-* -name "*${{ steps.lowercase.outputs.name }}-${{ steps.tagger.outputs.version-without-v }}.spdx.json*.spdx.json" -type f)
+          SBOM_FILE=$(find /tmp/sbom-action-* -name "sbom.spdx.json" -type f)
           echo "${SBOM_FILE}"
           if [ -z "$SBOM_FILE" ]; then
             echo "Error: .spdx file not found"
