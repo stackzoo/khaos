@@ -16,6 +16,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: ncipollo/release-action@v1
+      with:
+        generateReleaseNotes: true
     - uses: anchore/sbom-action@v0
 
   build-and-publish-oci:
