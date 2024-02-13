@@ -22,9 +22,9 @@ type ConsumeNamespaceResourcesReconciler struct {
 	Scheme *runtime.Scheme
 }
 
-// +kubebuilder:rbac:groups=stackzoo.io,resources=consumenamespaceresources,verbs=get;list;watch;create;update;patch;delete
-// +kubebuilder:rbac:groups=stackzoo.io,resources=consumenamespaceresources/status,verbs=get;update;patch
-// +kubebuilder:rbac:groups=stackzoo.io,resources=consumenamespaceresources/finalizers,verbs=update
+// +kubebuilder:rbac:groups=khaos.stackzoo.io,resources=consumenamespaceresources,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=khaos.stackzoo.io,resources=consumenamespaceresources/status,verbs=get;update;patch
+// +kubebuilder:rbac:groups=khaos.stackzoo.io,resources=consumenamespaceresources/finalizers,verbs=update
 //+kubebuilder:rbac:groups=apps,resources=deployments,verbs=get;list;watch;update
 
 func (r *ConsumeNamespaceResourcesReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {

@@ -22,8 +22,8 @@ type EventsEntropyReconciler struct {
 	Scheme *runtime.Scheme
 }
 
-// +kubebuilder:rbac:groups=khaos.stackzoo.io,resources=eventsentropy,verbs=get;list;watch;create;update;patch;delete
-// +kubebuilder:rbac:groups=khaos.stackzoo.io,resources=eventsentropy/status,verbs=get;update;patch
+// +kubebuilder:rbac:groups=khaos.stackzoo.io,resources=eventsentropies,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=khaos.stackzoo.io,resources=eventsentropies/status,verbs=get;update;patch
 // +kubebuilder:rbac:groups="",resources=events,verbs=create
 
 func (r *EventsEntropyReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {

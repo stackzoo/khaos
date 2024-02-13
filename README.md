@@ -158,7 +158,7 @@ spec:
   selector:
     matchLabels:
       app: nginx
-  maxPods: 9
+  maxPods: 3
   namespace: prod
 ```  
 
@@ -198,7 +198,7 @@ nginx-deployment-7bf8c77b5b-gsprh   0/1     Terminating         0          33s
 ```console   
 2023-11-28T14:07:18+01:00       INFO    Reconciling PodDestroyer: default/nginx-destroyer       {"controller": "poddestroyer", "controllerGroup": "khaos.stackzoo.io", "controllerKind": "PodDestroyer", "PodDestroyer": {"name":"nginx-destroyer","namespace":"default"}, "namespace": "default", "name": "nginx-destroyer", "reconcileID": "1e16a7d2-825a-4b46-b4e5-ac1228bc1c36"}
 2023-11-28T14:07:18+01:00       INFO    Selector: {map[app:nginx] []}   {"controller": "poddestroyer", "controllerGroup": "khaos.stackzoo.io", "controllerKind": "PodDestroyer", "PodDestroyer": {"name":"nginx-destroyer","namespace":"default"}, "namespace": "default", "name": "nginx-destroyer", "reconcileID": "1e16a7d2-825a-4b46-b4e5-ac1228bc1c36"}
-2023-11-28T14:07:18+01:00       INFO    MaxPods: 9      {"controller": "poddestroyer", "controllerGroup": "khaos.stackzoo.io", "controllerKind": "PodDestroyer", "PodDestroyer": {"name":"nginx-destroyer","namespace":"default"}, "namespace": "default", "name": "nginx-destroyer", "reconcileID": "1e16a7d2-825a-4b46-b4e5-ac1228bc1c36"}
+2023-11-28T14:07:18+01:00       INFO    MaxPods: 3      {"controller": "poddestroyer", "controllerGroup": "khaos.stackzoo.io", "controllerKind": "PodDestroyer", "PodDestroyer": {"name":"nginx-destroyer","namespace":"default"}, "namespace": "default", "name": "nginx-destroyer", "reconcileID": "1e16a7d2-825a-4b46-b4e5-ac1228bc1c36"}
 2023-11-28T14:07:18+01:00       INFO    Namespace: prod {"controller": "poddestroyer", "controllerGroup": "khaos.stackzoo.io", "controllerKind": "PodDestroyer", "PodDestroyer": {"name":"nginx-destroyer","namespace":"default"}, "namespace": "default", "name": "nginx-destroyer", "reconcileID": "1e16a7d2-825a-4b46-b4e5-ac1228bc1c36"}
 ```  
 
@@ -228,7 +228,7 @@ metadata:
   resourceVersion: "2009"
   uid: fbba6287-6f70-406b-821e-9000f097afc5
 spec:
-  maxPods: 9
+  MaxPods: 3
   namespace: prod
   selector:
     matchLabels:

@@ -74,26 +74,6 @@ rules:
   - update
   - watch
 - apiGroups:
-  - khaos.my.domain
-  resources:
-  - randomscalings
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - khaos.my.domain
-  resources:
-  - randomscalings/status
-  verbs:
-  - get
-  - patch
-  - update
-- apiGroups:
   - khaos.stackzoo.io
   resources:
   - apiserveroverloads
@@ -170,6 +150,32 @@ rules:
 - apiGroups:
   - khaos.stackzoo.io
   resources:
+  - consumenamespaceresources
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - consumenamespaceresources/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - consumenamespaceresources/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
   - containerresourcechaos
   verbs:
   - create
@@ -216,7 +222,7 @@ rules:
 - apiGroups:
   - khaos.stackzoo.io
   resources:
-  - eventsentropy
+  - eventsentropies
   verbs:
   - create
   - delete
@@ -228,7 +234,7 @@ rules:
 - apiGroups:
   - khaos.stackzoo.io
   resources:
-  - eventsentropy/status
+  - eventsentropies/status
   verbs:
   - get
   - patch
@@ -340,6 +346,26 @@ rules:
 - apiGroups:
   - khaos.stackzoo.io
   resources:
+  - randomscalings
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
+  - randomscalings/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - khaos.stackzoo.io
+  resources:
   - secretdestroyers
   verbs:
   - create
@@ -359,32 +385,6 @@ rules:
   - khaos.stackzoo.io
   resources:
   - secretdestroyers/status
-  verbs:
-  - get
-  - patch
-  - update
-- apiGroups:
-  - stackzoo.io
-  resources:
-  - consumenamespaceresources
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - stackzoo.io
-  resources:
-  - consumenamespaceresources/finalizers
-  verbs:
-  - update
-- apiGroups:
-  - stackzoo.io
-  resources:
-  - consumenamespaceresources/status
   verbs:
   - get
   - patch

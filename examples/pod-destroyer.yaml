@@ -6,5 +6,5 @@ spec:
   selector:
     matchLabels:
       app: nginx
-  maxPods: 9
+  maxPods: 3
   namespace: prod

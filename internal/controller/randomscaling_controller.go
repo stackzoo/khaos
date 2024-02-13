@@ -23,8 +23,8 @@ type RandomScalingReconciler struct {
 	Scheme *runtime.Scheme
 }
 
-// +kubebuilder:rbac:groups=khaos.my.domain,resources=randomscalings,verbs=get;list;watch;create;update;patch;delete
-// +kubebuilder:rbac:groups=khaos.my.domain,resources=randomscalings/status,verbs=get;update;patch
+// +kubebuilder:rbac:groups=khaos.stackzoo.io,resources=randomscalings,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=khaos.stackzoo.io,resources=randomscalings/status,verbs=get;update;patch
 // +kubebuilder:rbac:groups=apps,resources=deployments,verbs=get;list;watch;update
 
 // Reconcile implements the reconciliation loop for RandomScaling
