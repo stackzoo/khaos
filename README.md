@@ -848,7 +848,7 @@ This command will install all the required *CRDs* and *RBAC manifests* and then 
 kubectl get pods -n khaos-system
 
 NAME                                       READY   STATUS             RESTARTS   AGE
-khaos-controller-manager-8887957bf-5b8g9   1/1     Running               0       107s
+khaos-controller-manager-8887957bf-5b8g9   2/2     Running               0       107s
 ```  
 
 > [!NOTE]  
