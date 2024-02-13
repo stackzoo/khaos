@@ -26,11 +26,18 @@ jobs:
         with:
           go-version: '1.21'
           cache: false
-      - name: golangci-lint
+      - name: Golangci-lint
         uses: golangci/golangci-lint-action@v3
         with:
           version: v1.54
+      - name: Makefile lint
+        uses: Uno-Takashi/checkmake-action@main
+      - name: Linting examples manifests
+        uses: ibiqlik/action-yamllint@v3
+        with:
+          file_or_dir: examples/
       - name: Run Gosec Security Scanner
         uses: securego/gosec@master
         with:
           args: '-exclude=G404,G204,G601 ./...'
+
