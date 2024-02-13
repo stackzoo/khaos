@@ -66,18 +66,18 @@ jobs:
         uses: anchore/sbom-action@v0
         with:
           image: ghcr.io/${{ steps.lowercase.outputs.name }}:${{ steps.tagger.outputs.version-without-v }}
-          artifact-name: ${{ steps.lowercase.outputs.name }}-${{ steps.tagger.outputs.version-without-v }}.spdx.json
+          artifact-name: ${{ steps.lowercase.outputs.name }}.spdx.json
 
       - name: Sign image with Cosign
         run: |
-          cosign sign --yes --key env://COSIGN_PRIVATE_KEY "ghcr.io/r3drun3/immunize/${{ steps.copa.outputs.patched-image }}"
+          cosign sign --yes --key env://COSIGN_PRIVATE_KEY "ghcr.io/${{ steps.lowercase.outputs.name }}:${{ steps.tagger.outputs.version-without-v }}"
         env:
           COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
           COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
 
       - name: Attest the Image with SBOM
         run: |
-          echo "${{ env.PATCHED_TAG_SBOM }}"
+          ls -lah /tmp
           SBOM_FILE=$(find /tmp/sbom-action-* -name "*${{ steps.lowercase.outputs.name }}-${{ steps.tagger.outputs.version-without-v }}.spdx.json*.spdx.json" -type f)
           echo "${SBOM_FILE}"
           if [ -z "$SBOM_FILE" ]; then
