@@ -26,3 +26,8 @@ Dockerfile.cross
 *.swp
 *.swo
 *~
+
+
+# Cosign
+
+cosign.key
