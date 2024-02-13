@@ -62,29 +62,9 @@ jobs:
       - name: Push the OCI Image
         run: docker push ghcr.io/${{ steps.lowercase.outputs.name }}:${{ steps.tagger.outputs.version-without-v }}
 
-      - name: Produce Image SBOM
-        uses: anchore/sbom-action@v0
-        with:
-          image: ghcr.io/${{ steps.lowercase.outputs.name }}:${{ steps.tagger.outputs.version-without-v }}
-          artifact-name: sbom.spdx.json
-
       - name: Sign image with Cosign
         run: |
           cosign sign --yes --key env://COSIGN_PRIVATE_KEY "ghcr.io/${{ steps.lowercase.outputs.name }}:${{ steps.tagger.outputs.version-without-v }}"
-        env:
-          COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
-          COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
-
-      - name: Attest the Image with SBOM
-        run: |
-          ls -lah /tmp
-          SBOM_FILE=$(find /tmp/sbom-action-* -name "sbom.spdx.json" -type f)
-          echo "${SBOM_FILE}"
-          if [ -z "$SBOM_FILE" ]; then
-            echo "Error: .spdx file not found"
-            exit 1
-          fi
-          cosign attest --yes --key env://COSIGN_PRIVATE_KEY --type spdx --predicate "${SBOM_FILE}" "ghcr.io/${{ steps.lowercase.outputs.name }}:${{ steps.tagger.outputs.version-without-v }}"
         env:
           COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
           COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
