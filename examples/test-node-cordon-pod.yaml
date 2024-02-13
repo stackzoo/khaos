@@ -4,6 +4,6 @@ metadata:
   name: busybox-pod
 spec:
   containers:
-  - name: busybox-container
-    image: busybox
-    command: ["/bin/sh", "-c", "while true; do sleep 3600; done"]
+    - name: busybox-container
+      image: busybox
+      command: ["/bin/sh", "-c", "while true; do sleep 3600; done"]
