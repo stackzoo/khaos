@@ -78,7 +78,7 @@ jobs:
           name: khaos
           repository: ${{ github.repository }}/helm-charts
           tag: ${{ github.ref_name }}
-          path: charts/
+          path: charts/khaos
           registry: ghcr.io
           registry_username:  ${{ github.repository_owner }}
           registry_password: ${{ secrets.GITHUB_TOKEN }}
