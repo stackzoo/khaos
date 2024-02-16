@@ -74,6 +74,8 @@ Deployment
   uninstall        Uninstall CRDs from the K8s cluster specified in ~/.kube/config. Call with ignore-not-found=true to ignore resource not found errors during deletion.
   deploy           Deploy controller to the K8s cluster specified in ~/.kube/config.
   undeploy         Undeploy controller from the K8s cluster specified in ~/.kube/config. Call with ignore-not-found=true to ignore resource not found errors during deletion.
+  helmify          Download helmify locally if necessary.
+  helm             Produce operator helm charts
 
 Build Dependencies
   kustomize        Download kustomize locally if necessary. If wrong version is installed, it will be removed before downloading.
@@ -234,7 +236,7 @@ spec:
     matchLabels:
       app: nginx
 status:
-  numPodsDestroyed: 9
+  numPodsDestroyed: 7
 ```  
 
 The `status` spec tells you how many pods have been successfully destroyed.  
@@ -854,6 +856,14 @@ khaos-controller-manager-8887957bf-5b8g9   2/2     Running               0      
 > [!NOTE]  
 > If you encounter RBAC errors, you may need to grant yourself cluster-admin privileges or be logged in as admin.  
   
+The *Makefile* also contains a target to build the operator's *Helm chart* with [*helmify*](https://github.com/arttor/helmify).  
+You can build the helm chart with the following command (once you are inside the project's root):  
+```console
+make helm
+```  
+As of right now, the charts are put inside the `charts` folder and not published to a registry or a repo.  
+
+
 
 ## Operator Image Signature Verification
 The `realease` pipeline sign the operator's *OCI image* with [cosign](https://docs.sigstore.dev/signing/quickstart/).  

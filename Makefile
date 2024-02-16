@@ -1,3 +1,5 @@
+# Set the shell to bash always
+SHELL := /bin/bash
 
 # Image URL to use all building/pushing image targets
 IMG ?= controller:latest
@@ -150,6 +152,19 @@ deploy: manifests kustomize ## Deploy controller to the K8s cluster specified in
 .PHONY: undeploy
 undeploy: ## Undeploy controller from the K8s cluster specified in ~/.kube/config. Call with ignore-not-found=true to ignore resource not found errors during deletion.
 	$(KUSTOMIZE) build config/default | $(KUBECTL) delete --ignore-not-found=$(ignore-not-found) -f -
+
+
+######################### Helmify #########################
+HELMIFY=$(shell which helmify)
+
+.PHONY: helmify
+helmify: $(HELMIFY) ## Download helmify locally if necessary.
+$(HELMIFY): $(LOCALBIN)
+	test -s $(LOCALBIN)/helmify || GOBIN=$(LOCALBIN) go install github.com/arttor/helmify/cmd/helmify@v0.4.5
+
+.PHONY: helm
+helm: manifests kustomize helmify ## Produce operator helm charts
+	$(KUSTOMIZE) build config/default | $(HELMIFY) ./charts
 
 ##@ Build Dependencies
 

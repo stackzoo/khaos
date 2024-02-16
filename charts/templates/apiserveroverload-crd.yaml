@@ -1,0 +1,54 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: apiserveroverloads.khaos.stackzoo.io
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.13.0
+  labels:
+  {{- include "charts.labels" . | nindent 4 }}
+spec:
+  group: khaos.stackzoo.io
+  names:
+    kind: ApiServerOverload
+    listKind: ApiServerOverloadList
+    plural: apiserveroverloads
+    singular: apiserveroverload
+  scope: Namespaced
+  versions:
+  - name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: ApiServerOverload is the Schema for the apiserveroverloads API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: ApiServerOverloadSpec defines the desired state of ApiServerOverload
+            type: object
+          status:
+            description: ApiServerOverloadStatus defines the observed state of ApiServerOverload
+            properties:
+              executedTimestamp:
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
