@@ -28,7 +28,7 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Go
         uses: actions/setup-go@v2
@@ -68,3 +68,17 @@ jobs:
         env:
           COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
           COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
+
+      - name: helmify
+        run: make helm
+
+      - name: Chart | Push
+        uses: appany/helm-oci-chart-releaser@v0.3.0
+        with:
+          name: khaos
+          repository: ${{ github.repository }}/helm-charts
+          tag: ${{ steps.tagger.outputs.version-without-v }}
+          path: charts
+          registry: ghcr.io
+          registry_username:  ${{ github.repository_owner }}
+          registry_password: ${{ secrets.GITHUB_TOKEN }}
