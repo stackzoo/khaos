@@ -6,8 +6,8 @@ The following versions are currently being supported with security updates.
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 0.0.21   | :white_check_mark: |
-| < 0.0.21   | :x:                |
+| 0.0.22   | :white_check_mark: |
+| < 0.0.22   | :x:                |
 
 ## Reporting a Vulnerability
 
