@@ -839,10 +839,12 @@ Warning  FailedScheduling  63s   default-scheduler  0/4 nodes are available: 1 n
 
 
 ## Operator Installation
+
+### Via Makefile
 This repo contains a [github action](https://github.com/stackzoo/khaos/blob/main/.github/workflows/release.yaml) to publish  the operator *oci image*  to *github registry* when new release tags are pushed to the main branch.  
 In order to install the operator as a pod in the cluster you can leverage one of the *make* targets:  
 ```console
-make deploy IMG=ghcr.io/stackzoo/khaos:0.0.27
+make deploy IMG=ghcr.io/stackzoo/khaos:0.0.28
 ```  
 
 This command will install all the required *CRDs* and *RBAC manifests* and then start the operator as a pod:  
@@ -856,12 +858,19 @@ khaos-controller-manager-8887957bf-5b8g9   2/2     Running               0      
 > [!NOTE]  
 > If you encounter RBAC errors, you may need to grant yourself cluster-admin privileges or be logged in as admin.  
   
+### Via Helm
 The *Makefile* also contains a target to build the operator's *Helm chart* with [*helmify*](https://github.com/arttor/helmify).  
-You can build the helm chart with the following command (once you are inside the project's root):  
+You can build the helm chart locally with the following command (once you are inside the project's root):  
 ```console
 make helm
 ```  
-As of right now, the charts are put inside the `charts` folder and not published to a registry or a repo.  
+This will put the charts inside the `charts/khaos` folder.  
+The release action also push the charts on the github registry.  
+You can install the operator via helm with the following single command:  
+```console
+helm upgrade --install khaos oci://ghcr.io/stackzoo/khaos/helm-charts/khaos --version v0.0.28  
+```  
+
 
 
 
@@ -869,12 +878,12 @@ As of right now, the charts are put inside the `charts` folder and not published
 The `realease` pipeline sign the operator's *OCI image* with [cosign](https://docs.sigstore.dev/signing/quickstart/).  
 In order to verify the signature, use the following command:  
 ```console
-cosign verify --key cosign/cosign.pub ghcr.io/stackzoo/khaos:0.0.27
+cosign verify --key cosign/cosign.pub ghcr.io/stackzoo/khaos:0.0.28
 ```  
 Verification output:  
 ```console
 
-Verification for ghcr.io/stackzoo/khaos:0.0.27 --
+Verification for ghcr.io/stackzoo/khaos:0.0.28 --
 The following checks were performed on each of these signatures:
   - The cosign claims were validated
   - Existence of the claims in the transparency log was verified offline
