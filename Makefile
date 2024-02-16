@@ -1,6 +1,3 @@
-# Set the shell to bash always
-SHELL := /bin/bash
-
 # Image URL to use all building/pushing image targets
 IMG ?= controller:latest
 # ENVTEST_K8S_VERSION refers to the version of kubebuilder assets to be downloaded by envtest binary.
@@ -155,7 +152,7 @@ undeploy: ## Undeploy controller from the K8s cluster specified in ~/.kube/confi
 
 
 ######################### Helmify #########################
-HELMIFY=$(shell which helmify)
+HELMIFY ?= $(LOCALBIN)/helmify
 
 .PHONY: helmify
 helmify: $(HELMIFY) ## Download helmify locally if necessary.
