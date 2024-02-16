@@ -1,12 +1,12 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{ include "charts.fullname" . }}-proxy-role
+  name: {{ include "khaos.fullname" . }}-proxy-role
   labels:
     app.kubernetes.io/component: kube-rbac-proxy
     app.kubernetes.io/created-by: khaos
     app.kubernetes.io/part-of: khaos
-  {{- include "charts.labels" . | nindent 4 }}
+  {{- include "khaos.labels" . | nindent 4 }}
 rules:
 - apiGroups:
   - authentication.k8s.io
@@ -24,17 +24,17 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: {{ include "charts.fullname" . }}-proxy-rolebinding
+  name: {{ include "khaos.fullname" . }}-proxy-rolebinding
   labels:
     app.kubernetes.io/component: kube-rbac-proxy
     app.kubernetes.io/created-by: khaos
     app.kubernetes.io/part-of: khaos
-  {{- include "charts.labels" . | nindent 4 }}
+  {{- include "khaos.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: '{{ include "charts.fullname" . }}-proxy-role'
+  name: '{{ include "khaos.fullname" . }}-proxy-role'
 subjects:
 - kind: ServiceAccount
-  name: '{{ include "charts.fullname" . }}-controller-manager'
+  name: '{{ include "khaos.fullname" . }}-controller-manager'
   namespace: '{{ .Release.Namespace }}'

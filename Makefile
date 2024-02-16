@@ -161,7 +161,7 @@ $(HELMIFY): $(LOCALBIN)
 
 .PHONY: helm
 helm: manifests kustomize helmify ## Produce operator helm charts
-	$(KUSTOMIZE) build config/default | $(HELMIFY) charts
+	$(KUSTOMIZE) build config/default | $(HELMIFY) charts/khaos
 
 ##@ Build Dependencies
 

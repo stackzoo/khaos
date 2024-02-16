@@ -1,24 +1,24 @@
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
-  name: secretdestroyers.khaos.stackzoo.io
+  name: eventsentropies.khaos.stackzoo.io
   annotations:
     controller-gen.kubebuilder.io/version: v0.13.0
   labels:
-  {{- include "charts.labels" . | nindent 4 }}
+  {{- include "khaos.labels" . | nindent 4 }}
 spec:
   group: khaos.stackzoo.io
   names:
-    kind: SecretDestroyer
-    listKind: SecretDestroyerList
-    plural: secretdestroyers
-    singular: secretdestroyer
+    kind: EventsEntropy
+    listKind: EventsEntropyList
+    plural: eventsentropies
+    singular: eventsentropy
   scope: Namespaced
   versions:
   - name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: SecretDestroyer is the Schema for the secretdestroyers API
+        description: EventsEntropy is the Schema for the eventsentropies API
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -33,27 +33,17 @@ spec:
           metadata:
             type: object
           spec:
-            description: SecretDestroyerSpec defines the desired state of SecretDestroyer
+            description: EventsEntropySpec defines the desired state of EventsEntropy
             properties:
-              namespace:
-                description: Namespace specifies the namespace of the secrets to be
-                  targeted for destruction.
-                type: string
-              secretNames:
-                description: SecretNames specifies the names of the secrets to be targeted
-                  for destruction.
+              events:
                 items:
                   type: string
                 type: array
+            required:
+            - events
             type: object
           status:
-            description: SecretDestroyerStatus defines the observed state of SecretDestroyer
-            properties:
-              numSecretsDestroyed:
-                description: NumSecretsDestroyed is the count of secrets successfully
-                  destroyed.
-                format: int32
-                type: integer
+            description: EventsEntropyStatus defines the observed state of EventsEntropy
             type: object
         type: object
     served: true

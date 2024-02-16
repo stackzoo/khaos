@@ -1,24 +1,24 @@
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
-  name: apiserveroverloads.khaos.stackzoo.io
+  name: nodedestroyers.khaos.stackzoo.io
   annotations:
     controller-gen.kubebuilder.io/version: v0.13.0
   labels:
-  {{- include "charts.labels" . | nindent 4 }}
+  {{- include "khaos.labels" . | nindent 4 }}
 spec:
   group: khaos.stackzoo.io
   names:
-    kind: ApiServerOverload
-    listKind: ApiServerOverloadList
-    plural: apiserveroverloads
-    singular: apiserveroverload
+    kind: NodeDestroyer
+    listKind: NodeDestroyerList
+    plural: nodedestroyers
+    singular: nodedestroyer
   scope: Namespaced
   versions:
   - name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: ApiServerOverload is the Schema for the apiserveroverloads API
+        description: NodeDestroyer is the Schema for the nodedestroyers API
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -33,13 +33,22 @@ spec:
           metadata:
             type: object
           spec:
-            description: ApiServerOverloadSpec defines the desired state of ApiServerOverload
+            description: NodeDestroyerSpec defines the desired state of NodeDestroyer
+            properties:
+              nodeNames:
+                description: NodeNames specifies the name of the node to be targeted
+                  for destruction.
+                items:
+                  type: string
+                type: array
             type: object
           status:
-            description: ApiServerOverloadStatus defines the observed state of ApiServerOverload
+            description: NodeDestroyerStatus defines the observed state of NodeDestroyer
             properties:
-              executedTimestamp:
-                type: string
+              numNodesDestroyed:
+                description: NumNodesDestroyed is the count of nodes successfully destroyed.
+                format: int32
+                type: integer
             type: object
         type: object
     served: true

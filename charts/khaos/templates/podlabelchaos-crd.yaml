@@ -1,24 +1,24 @@
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
-  name: cordonnodes.khaos.stackzoo.io
+  name: podlabelchaos.khaos.stackzoo.io
   annotations:
     controller-gen.kubebuilder.io/version: v0.13.0
   labels:
-  {{- include "charts.labels" . | nindent 4 }}
+  {{- include "khaos.labels" . | nindent 4 }}
 spec:
   group: khaos.stackzoo.io
   names:
-    kind: CordonNode
-    listKind: CordonNodeList
-    plural: cordonnodes
-    singular: cordonnode
+    kind: PodLabelChaos
+    listKind: PodLabelChaosList
+    plural: podlabelchaos
+    singular: podlabelchaos
   scope: Namespaced
   versions:
   - name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: CordonNode is the Schema for the cordonnodes API
+        description: PodLabelChaos is the Schema for the podlabelchaos API
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -33,19 +33,24 @@ spec:
           metadata:
             type: object
           spec:
-            description: CordonNodeSpec defines the desired state of CordonNode
+            description: PodLabelChaosSpec defines the desired state of PodLabelChaos
             properties:
-              nodesToCordon:
-                description: NodesToCordon is a list of node names to cordon
-                items:
+              addLabels:
+                type: boolean
+              deploymentName:
+                type: string
+              labels:
+                additionalProperties:
                   type: string
-                type: array
+                type: object
+              namespace:
+                type: string
             type: object
           status:
-            description: CordonNodeStatus defines the observed state of CordonNode
+            description: PodLabelChaosStatus defines the observed state of PodLabelChaos
             properties:
-              nodesCordoned:
-                description: NodesCordoned is the number of nodes successfully cordoned
+              numPodsDestroyed:
+                format: int32
                 type: integer
             type: object
         type: object

@@ -1,12 +1,12 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{ include "charts.fullname" . }}-metrics-reader
+  name: {{ include "khaos.fullname" . }}-metrics-reader
   labels:
     app.kubernetes.io/component: kube-rbac-proxy
     app.kubernetes.io/created-by: khaos
     app.kubernetes.io/part-of: khaos
-  {{- include "charts.labels" . | nindent 4 }}
+  {{- include "khaos.labels" . | nindent 4 }}
 rules:
 - nonResourceURLs:
   - /metrics

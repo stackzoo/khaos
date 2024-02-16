@@ -1,24 +1,24 @@
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
-  name: podlabelchaos.khaos.stackzoo.io
+  name: cordonnodes.khaos.stackzoo.io
   annotations:
     controller-gen.kubebuilder.io/version: v0.13.0
   labels:
-  {{- include "charts.labels" . | nindent 4 }}
+  {{- include "khaos.labels" . | nindent 4 }}
 spec:
   group: khaos.stackzoo.io
   names:
-    kind: PodLabelChaos
-    listKind: PodLabelChaosList
-    plural: podlabelchaos
-    singular: podlabelchaos
+    kind: CordonNode
+    listKind: CordonNodeList
+    plural: cordonnodes
+    singular: cordonnode
   scope: Namespaced
   versions:
   - name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: PodLabelChaos is the Schema for the podlabelchaos API
+        description: CordonNode is the Schema for the cordonnodes API
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -33,24 +33,19 @@ spec:
           metadata:
             type: object
           spec:
-            description: PodLabelChaosSpec defines the desired state of PodLabelChaos
+            description: CordonNodeSpec defines the desired state of CordonNode
             properties:
-              addLabels:
-                type: boolean
-              deploymentName:
-                type: string
-              labels:
-                additionalProperties:
+              nodesToCordon:
+                description: NodesToCordon is a list of node names to cordon
+                items:
                   type: string
-                type: object
-              namespace:
-                type: string
+                type: array
             type: object
           status:
-            description: PodLabelChaosStatus defines the observed state of PodLabelChaos
+            description: CordonNodeStatus defines the observed state of CordonNode
             properties:
-              numPodsDestroyed:
-                format: int32
+              nodesCordoned:
+                description: NodesCordoned is the number of nodes successfully cordoned
                 type: integer
             type: object
         type: object
