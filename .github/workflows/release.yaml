@@ -70,15 +70,15 @@ jobs:
           COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
 
       - name: helmify
-        run: pwd && ls -lah && make helm
+        run: pwd && ls -lah && make helm && ls && ls charts
 
       - name: Chart | Push
         uses: appany/helm-oci-chart-releaser@v0.3.0
         with:
           name: khaos
           repository: ${{ github.repository }}/helm-charts
-          tag: ${{ steps.tagger.outputs.version-without-v }}
-          path: charts
+          tag: ${{ github.ref_name }}
+          path: charts/
           registry: ghcr.io
           registry_username:  ${{ github.repository_owner }}
           registry_password: ${{ secrets.GITHUB_TOKEN }}
