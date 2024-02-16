@@ -842,7 +842,7 @@ Warning  FailedScheduling  63s   default-scheduler  0/4 nodes are available: 1 n
 This repo contains a [github action](https://github.com/stackzoo/khaos/blob/main/.github/workflows/release.yaml) to publish  the operator *oci image*  to *github registry* when new release tags are pushed to the main branch.  
 In order to install the operator as a pod in the cluster you can leverage one of the *make* targets:  
 ```console
-make deploy IMG=ghcr.io/stackzoo/khaos:0.0.22
+make deploy IMG=ghcr.io/stackzoo/khaos:0.0.24
 ```  
 
 This command will install all the required *CRDs* and *RBAC manifests* and then start the operator as a pod:  
@@ -869,12 +869,12 @@ As of right now, the charts are put inside the `charts` folder and not published
 The `realease` pipeline sign the operator's *OCI image* with [cosign](https://docs.sigstore.dev/signing/quickstart/).  
 In order to verify the signature, use the following command:  
 ```console
-cosign verify --key cosign/cosign.pub ghcr.io/stackzoo/khaos:0.0.22
+cosign verify --key cosign/cosign.pub ghcr.io/stackzoo/khaos:0.0.24
 ```  
 Verification output:  
 ```console
 
-Verification for ghcr.io/stackzoo/khaos:0.0.22 --
+Verification for ghcr.io/stackzoo/khaos:0.0.24 --
 The following checks were performed on each of these signatures:
   - The cosign claims were validated
   - Existence of the claims in the transparency log was verified offline
