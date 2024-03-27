@@ -858,7 +858,7 @@ khaos-controller-manager-8887957bf-5b8g9   2/2     Running               0      
 > [!NOTE]  
 > If you encounter RBAC errors, you may need to grant yourself cluster-admin privileges or be logged in as admin.  
   
-### Via Helm
+### Via Helm (Recommended)
 The *Makefile* also contains a target to build the operator's *Helm chart* with [*helmify*](https://github.com/arttor/helmify).  
 You can build the helm chart locally with the following command (once you are inside the project's root):  
 ```console
