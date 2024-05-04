@@ -896,7 +896,7 @@ The following checks were performed on each of these signatures:
 
 ## Useful References
 
-- [kubuilder docs](https://book.kubebuilder.io/)
+- [kubebuilder docs](https://book.kubebuilder.io/)
 - [programming kubernetes book](https://www.oreilly.com/library/view/programming-kubernetes/9781492047094/)
 - [kubernetes programming with go book](https://link.springer.com/book/10.1007/978-1-4842-9026-2)
 - [chaos engineering book](https://www.oreilly.com/library/view/chaos-engineering/9781492043850/)  
